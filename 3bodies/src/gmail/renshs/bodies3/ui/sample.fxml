@@ -1,0 +1,50 @@
+<?language javascript?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.Camera?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.SubScene?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.MapValueFactory?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.animation.AnimationTimer?>
+<BorderPane fx:controller="gmail.renshs.bodies3.ui.Controller"
+          xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <ToolBar>
+            <Button text="start" fx:id="play" onAction="#start" />
+            <Button text="reset" fx:id="reset" onAction="#reset" />
+            <Button text="stop" fx:id="stop" onAction="#stop" />
+        </ToolBar>
+    </top>
+    <center>
+        <Pane fx:id="pane" prefWidth="800" prefHeight="600" >
+        </Pane>
+    </center>
+    <left>
+        <VBox>
+            <HBox alignment="CENTER">
+                <Label text="G: " />
+                <TextField fx:id="Gtext" text="0.2"/>
+            </HBox>
+            <TableView fx:id="bodyTableView" editable="true" >
+            </TableView>
+            <ToolBar>
+                <Button text="addBody" onAction="#addBody" />
+                <Button text="removeBody" onAction="#removeBody" />
+            </ToolBar>
+        </VBox>
+    </left>
+</BorderPane>

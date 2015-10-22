@@ -1,6 +1,7 @@
 package gmail.renshs.bodies3;
 
 import com.sun.javafx.geom.Vec3d;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
@@ -18,6 +19,8 @@ public class Body {
 
     TheWorld world;
 
+    String name;
+
     double mass = 1;
     double radius = 1;
 
@@ -34,7 +37,7 @@ public class Body {
         this.mass = mass;
         this.radius = radius;
         this.position = position;
-        shape = new Sphere(mass);
+        shape = new Sphere(radius);
         Color color = new Color(random.nextDouble(), random.nextDouble(), random.nextDouble(), 1);
         shape.setMaterial(new PhongMaterial(color));
         shape.getTransforms().add(new Translate(position.getX(), position.getY(), position.getZ()));
@@ -63,10 +66,9 @@ public class Body {
      * first, calculate force by all bodies,
      * then the force make velocity changed
      * the velocity make position changed.
-     * @param bodies
      * @param time
      */
-    public void nextTime(List<Body> bodies, double time){
+    public void nextTime(double time){
         velocity.x += force.x / mass;
         velocity.y += force.y / mass;
         velocity.z += force.z / mass;
@@ -80,6 +82,7 @@ public class Body {
      * Fx = F*X/r, Fy=F*Y/r, Fz=F*Z/r
      * so: Fx = (G*m1*m2)*X/r^3
      * so: Fx = (G*m1*m2/r^3) * X
+     * and so on Fy, Fz
      *
      * then: this.force = this.force+(Fx,Fy,Fz)
      * @param bodies
@@ -104,15 +107,19 @@ public class Body {
             }
         }
     }
-    private void calculateForceFix(){
-
-    }
-
 
     public void log(){
         System.out.print(position);
         System.out.print(velocity);
         System.out.println(force);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getMass() {
