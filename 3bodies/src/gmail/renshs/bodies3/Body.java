@@ -91,6 +91,7 @@ public class Body {
         calculateG(bodies);
     }
     private void calculateG(List<Body> bodies) {
+        force= new Vec3d(0,0,0);
         for (Body body : bodies) {
             if (body.equals(this)){
                 continue;
@@ -101,9 +102,9 @@ public class Body {
                 velocity = new Vec3d(0,0,0);
             }else{
                 double forceParam = world.getG()* this.mass *body.mass/Math.pow(distance, 3);
-                force.x = forceParam*(body.position.getX()-this.position.getX());
-                force.y = forceParam*(body.position.getY()-this.position.getY());
-                force.z = forceParam*(body.position.getZ()-this.position.getZ());
+                force.x += forceParam*(body.position.getX()-this.position.getX());
+                force.y += forceParam*(body.position.getY()-this.position.getY());
+                force.z += forceParam*(body.position.getZ()-this.position.getZ());
             }
         }
     }
