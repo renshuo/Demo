@@ -27,6 +27,8 @@
             <Button text="start" fx:id="play" onAction="#start" />
             <Button text="reset" fx:id="reset" onAction="#reset" />
             <Button text="stop" fx:id="stop" onAction="#stop" />
+            <Button text="save" fx:id="save" onAction="#save" />
+            <Button text="load" fx:id="load" onAction="#load" />
         </ToolBar>
     </top>
     <center>
@@ -37,7 +39,9 @@
         <VBox>
             <HBox alignment="CENTER">
                 <Label text="G: " />
-                <TextField fx:id="Gtext" text="0.2"/>
+                <TextField fx:id="Gtext" text="1"/>
+                <Label text="time times"/>
+                <TextField fx:id="timeSpeed" text="10" />
             </HBox>
             <TableView fx:id="bodyTableView" editable="true" >
             </TableView>

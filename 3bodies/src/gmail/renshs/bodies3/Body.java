@@ -1,12 +1,10 @@
 package gmail.renshs.bodies3;
 
 import com.sun.javafx.geom.Vec3d;
-import javafx.beans.property.StringProperty;
 import javafx.geometry.Point3D;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
-import javafx.scene.transform.Transform;
 import javafx.scene.transform.Translate;
 
 import java.util.List;
@@ -16,8 +14,6 @@ import java.util.Random;
  * Created by sren on 15-10-21.
  */
 public class Body {
-
-    TheWorld world;
 
     String name;
 
@@ -69,9 +65,9 @@ public class Body {
      * @param time
      */
     public void nextTime(double time){
-        velocity.x += force.x / mass;
-        velocity.y += force.y / mass;
-        velocity.z += force.z / mass;
+        velocity.x += (force.x / mass)*time;
+        velocity.y += (force.y / mass)*time;
+        velocity.z += (force.z / mass)*time;
         translate = new Vec3d(velocity.x*time, velocity.y*time, velocity.z*time);
         position = position.add(translate.x, translate.y, translate.z);
         shape.getTransforms().add(new Translate(translate.x, translate.y, translate.z));
@@ -87,10 +83,11 @@ public class Body {
      * then: this.force = this.force+(Fx,Fy,Fz)
      * @param bodies
      */
-    public void calculateForce(List<Body> bodies){
-        calculateG(bodies);
+    public void calculateForce(List<Body> bodies, double G){
+        calculateG(bodies , G);
     }
-    private void calculateG(List<Body> bodies) {
+
+    private void calculateG(List<Body> bodies, double G) {
         force= new Vec3d(0,0,0);
         for (Body body : bodies) {
             if (body.equals(this)){
@@ -101,7 +98,7 @@ public class Body {
                 force = new Vec3d(0,0,0);
                 velocity = new Vec3d(0,0,0);
             }else{
-                double forceParam = world.getG()* this.mass *body.mass/Math.pow(distance, 3);
+                double forceParam = G* this.mass *body.mass/Math.pow(distance, 3);
                 force.x += forceParam*(body.position.getX()-this.position.getX());
                 force.y += forceParam*(body.position.getY()-this.position.getY());
                 force.z += forceParam*(body.position.getZ()-this.position.getZ());
@@ -167,7 +164,4 @@ public class Body {
         this.force = force;
     }
 
-    public void setWorld(TheWorld world) {
-        this.world = world;
-    }
 }

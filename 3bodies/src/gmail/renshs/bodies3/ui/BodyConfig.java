@@ -4,10 +4,14 @@ import com.sun.javafx.geom.Vec3d;
 import javafx.beans.property.*;
 import javafx.geometry.Point3D;
 
+import java.io.Serializable;
+
 /**
  * Created by sren on 15-10-22.
  */
-public class BodyConfig {
+public class BodyConfig implements Serializable{
+
+    static final long serialVersionUID = 12138L;
 
     private final StringProperty name;
     private final DoubleProperty mass;
