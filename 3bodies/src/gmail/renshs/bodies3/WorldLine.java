@@ -72,4 +72,8 @@ public class WorldLine {
     public void setTimeSpeed(double timeSpeed) {
         this.timeSpeed = timeSpeed;
     }
+
+    public ViewWorld getViewWorld() {
+        return viewWorld;
+    }
 }

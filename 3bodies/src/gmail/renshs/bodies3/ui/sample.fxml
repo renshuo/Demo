@@ -51,4 +51,8 @@
             </ToolBar>
         </VBox>
     </left>
+    <bottom>
+        <Label text="frames: " fx:id="frames"/>
+        <Label text="frame rate" fx:id="frameRate"/>
+    </bottom>
 </BorderPane>

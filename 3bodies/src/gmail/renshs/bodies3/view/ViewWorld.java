@@ -118,4 +118,8 @@ public class ViewWorld {
     public void setPhyWorld(SpaceWorld phyWorld) {
         this.phyWorld = phyWorld;
     }
+
+    public long getFrame() {
+        return frame;
+    }
 }

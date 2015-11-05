@@ -3,9 +3,11 @@ package gmail.renshs.bodies3.ui;
 import gmail.renshs.bodies3.WorldLine;
 import gmail.renshs.bodies3.model.BodyModel;
 import gmail.renshs.bodies3.model.WorldModel;
+import javafx.animation.AnimationTimer;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -24,6 +26,8 @@ public class Controller {
 
     public Pane pane;
     public TextField timeSpeed;
+    public Label frameRate;
+    public Label frames;
 
     WorldLine world;
 
@@ -32,6 +36,22 @@ public class Controller {
         BodyConfigTable bct = new BodyConfigTable(bodyTableView);
 
     }
+
+    long lastFrames = 0;
+
+
+    AnimationTimer framer = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            long curframe = world.getViewWorld().getFrame();
+            if (lastFrames==0){
+                lastFrames = curframe;
+            }else{
+                frames.setText("frame: "+curframe);
+                frameRate.setText("frameRate: "+(curframe-lastFrames));
+            }
+        }
+    };
 
     public void initWorld(){
         WorldModel wm = new WorldModel();
@@ -50,9 +70,11 @@ public class Controller {
 
 
     public void reset(ActionEvent actionEvent) {
+        framer.stop();
         initWorld();
         System.out.println(bodyTableView.getItems().size());
         world.reset(bodyTableView.getItems(), Double.valueOf(Gtext.getText()));
+        framer.start();
     }
 
 
