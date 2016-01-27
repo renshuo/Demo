@@ -1,0 +1,29 @@
+#monitor {
+    position: relative;
+}
+#bimg {
+}
+#s1 {
+    left: 353px;
+    position: absolute;
+    top: 18px;
+}
+#fx1 {
+    left: 15px;
+    position: absolute;
+    top: 52px;
+}
+
+
+#green,#red {
+	position : absolute;
+	left: 415px;
+	top: 53px;
+	visibility : hidden;
+}
+
+
+#green {
+	visibility: visible;
+}
+	
