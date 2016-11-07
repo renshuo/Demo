@@ -1,0 +1,57 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+group '3rd'
+version '0.1'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+buildscript {
+    repositories {
+        maven { url "http://192.169.1.254/mvnRepo" }
+        //jcenter()
+
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE")
+    }
+}
+
+repositories {
+    //maven { url "http://192.169.1.254/mvnRepo" }
+    //mavenCentral()
+    jcenter() // https://jcenter.bintray.com
+}
+
+ext {
+    springBootVersion = "1.3.2.RELEASE"
+}
+
+dependencies {
+    compile fileTree(dir:'libs', include: '*.jar')
+
+    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+
+    //compile("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion") // for html template
+
+    compile("io.springfox:springfox-swagger2:2.2.2") // for API doc
+    compile("io.springfox:springfox-swagger-ui:2.2.2")
+
+    // AOP for logging
+    compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
+
+
+    compile 'org.quartz-scheduler:quartz:2.2.1'
+    compile 'com.google.guava:guava:20.0'
+
+    testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
+}
+
+mainClassName = 'hello.SampleController'
