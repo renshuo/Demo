@@ -1,0 +1,19 @@
+#for idea project
+.idea
+out/
+*.iml
+*.ipr
+*.iws
+
+
+#eclipse project
+.classpath
+.project
+.settings
+
+#gradle temp 
+.gradle
+gradle-app.setting
+build/
+
+
