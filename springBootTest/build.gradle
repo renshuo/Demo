@@ -22,9 +22,9 @@ buildscript {
 }
 
 repositories {
-    //maven { url "http://192.169.1.254/mvnRepo" }
+    maven { url "http://192.169.1.254/mvnRepo" }
     //mavenCentral()
-    jcenter() // https://jcenter.bintray.com
+    //jcenter() // https://jcenter.bintray.com
 }
 
 ext {

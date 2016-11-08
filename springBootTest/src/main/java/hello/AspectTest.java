@@ -1,10 +1,7 @@
 package hello;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -29,10 +26,14 @@ public class AspectTest {
         startTime.set(System.currentTimeMillis());
     }
 
-    @After(value = "webLog()", argNames = "java.lang.String")
-    public void after(Task task){
+    @After(value = "webLog()")
+    public void after(){
         long end = System.currentTimeMillis();
         log.info("after aspect: time="+(end-startTime.get())+"; resp=");
 
+    }
+    @AfterReturning(value = "webLog()", returning = "task")
+    public void afterRet(Task task){
+        log.debug("after: "+task);
     }
 }
