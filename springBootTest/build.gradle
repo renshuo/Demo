@@ -12,9 +12,7 @@ targetCompatibility = 1.8
 
 buildscript {
     repositories {
-        maven { url "http://192.169.1.254/mvnRepo" }
-        //jcenter()
-
+        maven { url "http://localhost:9080/repository/maven-public/" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE")
@@ -22,13 +20,14 @@ buildscript {
 }
 
 repositories {
-    maven { url "http://192.169.1.254/mvnRepo" }
-    //mavenCentral()
-    //jcenter() // https://jcenter.bintray.com
+    maven { url "http://localhost:9080/repository/maven-public/" }
 }
 
 ext {
-    springBootVersion = "1.3.2.RELEASE"
+    //springBootVersion = "1.3.2.RELEASE"
+    //springBootVersion = "1.3.8.RELEASE"
+    springBootVersion = "1.4.2.RELEASE"
+    //springBootVersion = "1.5.0.RELEASE"
 }
 
 dependencies {
