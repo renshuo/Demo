@@ -14,7 +14,7 @@ buildscript {
 		springBootVersion = '1.4.0.RELEASE'
 	}
 	repositories {
-    maven { url "http://localhost:9080/repository/maven-public/" }
+    maven { url "http://192.169.1.254:9080/repository/maven-public/" }
 
 	}
 	dependencies {
@@ -32,7 +32,7 @@ ext {
 }
 
 repositories {
-	maven { url "http://localhost:9080/repository/maven-public/" }
+	maven { url "http://192.169.1.254:9080/repository/maven-public/" }
 
 }
 
