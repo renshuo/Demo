@@ -1,0 +1,69 @@
+\documentclass[a4paper,12pt]{article}
+%\usepackage[utf8]{inputenc}
+
+% config chinese lang
+\usepackage{CJK}
+
+%  config font
+\usepackage{fontspec}
+\setmainfont{微软雅黑}
+% useable fonts: 宋体，微软雅黑
+
+%opening
+\title{scrum实践}
+\author{sren}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+% ------------------------------------
+ \section{backlog/story}
+
+ 一个故事（story）或者叫条目（backlog），要有以下元素：
+ 
+ \begin{enumerate}
+  \item ID: 统一标识符
+  \item Name: 名称，简短的描述性的故事名。
+  \item Importance: 重要性
+%   \item Initial estimate: 初始估算的工作量，最小单位是故事点（story point），大致相当于一个理想的人天。
+%   \item How to Demo: 如何做演示，本质是一个简单的测试方法描述
+  \item notes: 注解，相关的其他信息。
+ \end{enumerate}
+
+一个产品backlog实例：
+\begin{table}
+\begin{tabular}{|l|c|c|c|c|r|}
+\hline
+1	&存款	&30	&5	&登录，打开存款界面，存入10元，转到我的账户余额，检查余额增加了10元	&需要UML顺序图	\\
+\hline
+2	&查看自己的交易明细 &10 &5 &登录，点击交易，存钱，返回交易页面，看到新的存款显示。 &使用分页技术避免大规模数据库查询 \\
+\hline
+\end{tabular}
+\caption{backlog实例}
+\label{图表1}
+\end{table}
+
+
+\section{怎样准备sprint计划}
+\textbf{在sprint计划前，要确保产品backlog井然有序。}
+
+\begin{enumerate}
+  \item 产品backlog必须存在
+  \item 只能有一个backlog和一个产品负责人
+  \item 所有重要的backlog条目都已经根据重要性被评过分，不同的重要程度对应不同的分值。不要分值连续，留出空间。
+    \begin{itemize}
+     \item 只要确认在下一个sprint中出现，则一定要划分到一个特有的重要层次
+     \item 分数只代表重要性，相对性不与分值相比较
+    \end{itemize}
+  \item 产品负责人必须理解所有条目的含义。
+ \end{enumerate}
+
+\section{服务端}
+ 
+\section{客户端}
+
+\end{document}
