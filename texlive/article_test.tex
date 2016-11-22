@@ -1,0 +1,156 @@
+\documentclass[a4paper,12pt]{article} % 使用a4纸，12pt字体
+\usepackage{fullpage} % use 1 inch margins
+\usepackage{tabularx}
+\usepackage{booktabs} % 提供 \toprule, midrule, bottomrule 用于表格横线
+
+%\textwidth=350pt \textheight=22cm
+
+% config chinese lang
+\usepackage{xeCJK}
+%  config font
+%\usepackage{fontspec}
+\setmainfont{微软雅黑}
+% useable fonts: 宋体，微软雅黑
+
+% 中文化配置
+\renewcommand{\tablename}{表表}
+\renewcommand{\figurename}{图图}
+\renewcommand{\contentsname}{\centering 目录录} % 将英文的contents改为目录，并居中
+\renewcommand{\abstractname}{\centering 摘要} 
+
+%%%%%%%%%%% finsih config %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%标题首页
+\title{LaTeX样例文档}
+\author{sren}
+\date{\today}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty} % 将本页的style设置为空，页码不会出现
+
+
+% 摘要
+\newpage
+\pagenumbering{Roman}
+摘要部分
+
+
+% 目录
+\newpage
+\tableofcontents 
+
+
+\newpage % 新一页
+\pagenumbering{arabic}
+%\setcounter{page}{1} 设置这里页码从1重新开始
+%% 正文开始
+ \section{概述}
+ 本文是latex的文档样例文件，大多数常用的latex命令用法\\在这里都应该有。
+ 如果没有，那就是你不需要的！
+  % \\是换行，空行则表示下一段落，段落头会有indent
+
+ 概述页的第二段说明，本段没啥说的。注意本段有intent。
+
+ {\Huge 概述第三段，本段测试下自动换行，即超过一行长度的文本，看latex怎么处理。为了方便超过一行，所以使用了Huge级别的字。}
+ {\kill 本行不打印}
+ \pagebreak
+
+ 
+ \section[pz字体]{配置字体} % pz字体 是出现在目录中的文字，配置字体 是这个位置显示的文字
+ \subsection{不同的字体}
+ {\fontspec{宋体} 一些宋体字}\\ % 双反斜杠结束本行
+ {\fontspec{微软雅黑} 一些微软雅黑字体}\\
+ {\fontspec{黑体} 一些黑体字}\\
+ {\fontspec{文泉驿正黑} 一些文泉驿正黑体字}\\
+ {\fontspec{楷体_GB2312} 一些楷体GB2312体字}\\
+
+ \subsection*{不同的字大小} % * 表示不进入section编号，也不出现在目录中
+ {\tiny 最小的字 }\\
+ {\scriptsize 第二小的字，脚本用的字大小}\\
+ {\footnotesize 第三小的字，脚标用的}\\
+ {\small 小字}\\
+ {\normalsize 正常大小的字，应该就是正文用的字 }\\
+ {\large 大的字 }\\
+ {\Large 更大一点的}\\
+ {\LARGE 再大一点}\\
+ {\huge 巨大的字}\\
+ {\Huge 更巨大的字}\\* % 结束本行，禁止分页
+
+
+ \section{引用}
+ quote引用用来引用别的文字段落。quote整体缩进，但段首不缩进，
+ \begin{quote}
+   public void static main(String[] args){
+     System.out.println("hello world");
+   }
+  \end{quote}
+ 
+ verbatim用于贴代码，或者其他格式文本，verbatim可以保持文本的原始格式。
+\begin{verbatim}
+  public static void main(String[] args){
+    System.out.println("hello world!");
+  }
+\end{verbatim}
+ 简化版的verbatim即verb指令用法是这样的\verb-\verb+abc+-。其中的加号可以替换成别的，比如减号。
+ 实际上，verbatim环境是用+替代了\verb-\-，用\verb-\[-替代了\verb-{-，用\verb-\]-替代了\verb-}-，所以，在verb环境下如果想要排latex的话， 就用这3个符号就行。
+
+
+ \section{文字块}
+ \mbox{文字块是一段在块里的文字\\但是没有外框}\\
+ \fbox{这个是有外框的文字块}\\
+ \makebox[14cm][r]{makebox是mbox的原型？，可以加参数：右排版，宽14cm}\\
+ \framebox[14cm][s]{s表示\hfill 均匀分布}\\
+ 一个方块
+ \framebox{\rule{3mm}{0pt}\rule{0pt}{3mm}}\\
+ \newsavebox{\savbox}
+ \sbox{\savbox}{\framebox{储存方块，用于存东西，可以在别的地方重复引用}}
+ \usebox{\savbox}, \usebox{\savbox}, \usebox{\savbox}\\
+
+ 
+ \section{列表样例}
+ 编号的列表
+ \begin{enumerate}
+  \item 第一子系统\\
+  第一子系统的说明。
+  \item 第二子系统\\
+  第二子系统的说明。
+ \end{enumerate}
+
+ 不编号的列表
+ \begin{itemize} %不编号列表
+ \item lsit 1
+ \item list 2
+ \end{itemize}
+ 
+
+ \section{表格}
+表格前的正文说明
+\begin{table}[!th]
+\begin{tabular}{|l|c|c|c|c|r|}
+\toprule
+1	&存款	&30	&5	&登录，打开存款界面，存入10元，转到我的账户余额，检查余额增加了10元	&需要UML顺序图	\\
+\midrule
+2	&查看自己的交易明细 &10 &5 &登录，点击交易，存钱，返回交易页面，看到新的存款显示。 &使用分页技术避免大规模数据库查询 \\
+\bottomrule
+\end{tabular}
+\caption{表格实例}
+\label{ex:table}
+\end{table}
+表格后的正文说明，引用表格：\ref{ex:table}。
+
+{带有表线，指定宽度的表格}
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{|p{80pt}|>{\centering}p{80pt}|>{\raggedleft\arraybackslash}p{80pt}|}
+    \toprule
+    x1  & x2  & x3\\
+    \midrule
+    x1  & x2  & x3\\
+    x1  & x2  & x3\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+
+\end{document}
