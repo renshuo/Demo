@@ -2,6 +2,9 @@
 \usepackage{fullpage} % use 1 inch margins
 \usepackage{tabularx}
 \usepackage{booktabs} % 提供 \toprule, midrule, bottomrule 用于表格横线
+\usepackage{graphicx}
+\usepackage{xecolor}
+\usepackage{hyperref}
 
 %\textwidth=350pt \textheight=22cm
 
@@ -9,7 +12,7 @@
 \usepackage{xeCJK}
 %  config font
 %\usepackage{fontspec}
-\setmainfont{微软雅黑}
+\setCJKmainfont{微软雅黑}
 % useable fonts: 宋体，微软雅黑
 
 % 中文化配置
@@ -38,7 +41,10 @@
 
 % 目录
 \newpage
-\tableofcontents 
+\tableofcontents
+\newpage
+
+
 
 
 \newpage % 新一页
@@ -124,7 +130,30 @@
  \end{itemize}
  
 
- \section{表格}
+\section{图像}
+
+\subsection{插入图像文件}
+插入一幅本地图片：\\
+\begin{figure}[htbp] % h: here, t: top, b: bottom, p: float page
+  \centering
+  \includegraphics[width=10cm,height=15cm,keepaspectratio]{pic1.jpg}
+  \caption{看流星}
+  \label{fig:star1}
+\end{figure}
+
+\subsection{关于色彩} % TODO
+%% \textcolor {Red}{红}
+%% \textcolor{Green}{绿}
+%% \textcolor{Blue}{蓝}
+%% \textcolor[RGB]{255 ,0 ,0}{红}
+%% \textcolor[HTML]{00 FF 00}{绿}
+%% \textcolor[rgb]{0 ,0 ,1}{蓝}
+
+\subsection{矢量绘图}
+文档上介绍的几个太复杂了，先用dot吧\\
+
+
+\section{表格}
 表格前的正文说明
 \begin{table}[!th]
 \begin{tabular}{|l|c|c|c|c|r|}
@@ -151,6 +180,16 @@
     \bottomrule
   \end{tabular}
 \end{table}
+
+
+\section{超链接}
+\url{http://192.169.1.254/bbs}\\
+\href{http://192.169.1.254/bbs}{这是我们的BBS}
+
+
+\section{页眉页脚}
+
+
 
 
 \end{document}
