@@ -1,0 +1,55 @@
+\documentclass{beamer}
+%\usetheme{metropolis}
+%\usetheme{nirma}
+% config chinese lang
+
+\usepackage{xeCJK}
+%  config font
+\usepackage{fontspec}
+\setCJKmainfont{微软雅黑}
+% useable fonts: 宋体，微软雅黑
+
+
+\begin{document}
+
+\begin{frame}
+  \title{幻灯测试}
+  \author{sren}
+  \date{\today}
+  \maketitle
+\end{frame}
+
+
+%\frame{\tableofcontents}
+
+
+\section{第一段}
+\frame{\tableofcontents[currentsection]}
+\begin{frame}{自如之理，乃见真实}
+%  \pause % 用于点击继续功能
+  \begin{block}{佛告须菩提} 
+    凡所有相，皆是虚妄。若见诸相非相，则见如来。 
+  \end{block} 
+%  \pause
+  \begin{alertblock}{佛告须菩提} 凡所有相，皆是虚妄。若见诸相非相，则见如来。 
+  \end{alertblock} 
+%  \pause
+  \begin {exampleblock}{佛告须菩提} 凡所有相，皆是虚妄。若见诸相非相，则见如来。 
+  \end{exampleblock}
+\end{frame}
+
+
+\section{第2段}
+\frame{\tableofcontents[currentsection]}
+\begin{frame}{第二段frame}
+  第二段frame的内容
+\end{frame}
+
+\section{第3段}
+\frame{\tableofcontents[currentsection]}
+\begin{frame}{第三段}
+  第三端内容
+\end{frame}
+
+
+\end{document}
