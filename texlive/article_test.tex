@@ -14,6 +14,13 @@
 %\usepackage{fontspec}
 \setCJKmainfont{微软雅黑}
 % useable fonts: 宋体，微软雅黑
+{\newCJKfontfamily\kai{楷体_GB2312}}
+{\newCJKfontfamily\song{宋体}}
+{\newCJKfontfamily\hei{黑体}}
+{\newCJKfontfamily\yahei{微软雅黑}}
+{\newCJKfontfamily\zhei{文泉驿正黑}}
+
+
 
 % 中文化配置
 \renewcommand{\tablename}{表表}
@@ -45,8 +52,6 @@
 \newpage
 
 
-
-
 \newpage % 新一页
 \pagenumbering{arabic}
 %\setcounter{page}{1} 设置这里页码从1重新开始
@@ -65,11 +70,14 @@
  
  \section[pz字体]{配置字体} % pz字体 是出现在目录中的文字，配置字体 是这个位置显示的文字
  \subsection{不同的字体}
- {\fontspec{宋体} 一些宋体字}\\ % 双反斜杠结束本行
- {\fontspec{微软雅黑} 一些微软雅黑字体}\\
- {\fontspec{黑体} 一些黑体字}\\
- {\fontspec{文泉驿正黑} 一些文泉驿正黑体字}\\
- {\fontspec{楷体_GB2312} 一些楷体GB2312体字}\\
+ 字体族需要事先定义，定义的时候会有对应的命令。\\
+ {\song 一些宋体字}\\ % 双反斜杠结束本行
+ {\yahei 一些微软雅黑字体}\\
+ {\hei 一些黑体字}\\
+ {\zhei 一些文泉驿正黑体字}\\
+ %% \setCJKfamilyfont{xxx}{楷体_GB2312}
+ %% {\CJKfamily{xxx} 这是应该是楷体了吧}\\
+ {\kai 这个应该是楷体了}\\
 
  \subsection*{不同的字大小} % * 表示不进入section编号，也不出现在目录中
  {\tiny 最小的字 }\\
