@@ -26,6 +26,8 @@
 \renewcommand{\tablename}{表表}
 \renewcommand{\figurename}{图图}
 \renewcommand{\contentsname}{\centering 目录录} % 将英文的contents改为目录，并居中
+\renewcommand{\listtablename}{\centering 表目录}
+\renewcommand{\listfigurename}{\centering 图目录}
 \renewcommand{\abstractname}{\centering 摘要} 
 
 %%%%%%%%%%% finsih config %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,7 +52,9 @@
 \newpage
 \tableofcontents
 \newpage
-
+\listoffigures
+\newpage
+\listoftables
 
 \newpage % 新一页
 \pagenumbering{arabic}
@@ -196,7 +200,7 @@
 \href{http://192.169.1.254/bbs}{这是我们的BBS}
 
 
-\section{页眉页脚}
+\section{页眉页脚} %TODO
 
 
 \section{xeCJK}
