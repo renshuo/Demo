@@ -7,6 +7,7 @@
 \usepackage{hyperref}
 \usepackage{xeCJKfntef} % 提供下划线，删除线等特效
 \usepackage{indentfirst} %提供中文首行缩进
+\usepackage{listings} % 引用编程语言
 %\textwidth=350pt \textheight=22cm
 
 
@@ -215,5 +216,17 @@
 \CJKunderdot{下点符号}
 \CJKunderanysymbol{0.2em}{\tiny$\triangle$}{将任意符号放在文字下}\\
 
+
+\section{引用编程语言}
+% 引用一段java代码，但是只输出2到5行，左侧显示行号，隔几个号码显示，距离代码框10pt
+\begin{lstlisting}[language=Java,firstline=2,lastline=5,numbers=left,numberstyle=\large,stepnumber=2,numbersep=10pt]
+  import java.util.Map;
+  public class ABC{
+  public static void main(String[] args){
+    System.out.println(``hello world'');
+  }
+  }
+\end{lstlisting}
+  
 
 \end{document}
