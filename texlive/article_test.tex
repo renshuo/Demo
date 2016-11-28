@@ -10,21 +10,19 @@
 \usepackage{listings} % 引用编程语言
 \usepackage{fancyhdr} % 管理页眉页脚
 \usepackage{bbding} % 一些有意思的符号
+\usepackage{tikz}
+\usepackage{pgf-umlsd} % 画UML图
+\usepgflibrary{arrows} % pgf-umlsd需要
+
 %\textwidth=350pt \textheight=22cm
 
-
-% config chinese lang
 \usepackage{xeCJK}
-%  config font
-%\usepackage{fontspec}
 \setCJKmainfont{微软雅黑}
-% useable fonts: 宋体，微软雅黑
 {\newCJKfontfamily\kai{楷体_GB2312}}
 {\newCJKfontfamily\song{宋体}}
 {\newCJKfontfamily\hei{黑体}}
 {\newCJKfontfamily\yahei{微软雅黑}}
 {\newCJKfontfamily\zhei{文泉驿正黑}}
-
 
 
 % 中文化配置
@@ -64,17 +62,17 @@
 \newpage % 新一页
 \pagenumbering{arabic}
 %\setcounter{page}{1} 设置这里页码从1重新开始
-正文开始
+ 正文开始
  \section{概述}
  本文是latex的文档样例文件，大多数常用的latex命令用法\\在这里都应该有。
  如果没有，那就是你不需要的！
   % \\是换行，空行则表示下一段落，段落头会有indent
 
- 概述页的第二段说明，本段没啥说的。注意本段有intent。
+  概述页的第二段说明，本段没啥说的。注意本段有intent。
 
- {\Huge 概述第三段，本段测试下自动换行，即超过一行长度的文本，看latex怎么处理。为了方便超过一行，所以使用了Huge级别的字。}
- {\kill 本行不打印}
- \pagebreak
+  {\Huge 概述第三段，本段测试下自动换行，即超过一行长度的文本，看latex怎么处理。为了方便超过一行，所以使用了Huge级别的字。}
+% {\kill 本行不打印 } %% \kill 和tikz有冲突
+  \pagebreak
 
  
  \section[pz字体]{配置字体} % pz字体 是出现在目录中的文字，配置字体 是这个位置显示的文字
@@ -169,6 +167,39 @@
 
 \subsection{矢量绘图}
 文档上介绍的几个太复杂了，先用dot吧\\
+\subsection{UML绘图}
+\subsubsection{时序图}
+\begin{figure}
+  \centering
+\begin{sequencediagram}
+  \newthread{ss}{SimulationServer}
+    \newinst[2]{ctr}{SimControlNode}
+    \newinst[2]{ps}{PhysicsServer}
+    \newinst[2]{sense}{SenseServer}
+
+    \begin{call}{ss}{Initialize()}{sense}{}
+    \end{call}
+    \begin{sdblock}{Run Loop}{in a block}
+      \begin{call}{ss}{StartCycle()}{ctr}{}
+        \begin{call}{ctr}{ActAgent()}{sense}{}
+        \end{call}
+      \end{call}
+      \begin{call}{ss}{Update()}{ps}{}
+        \begin{call}{ps}{PrePhysicsUpdate()}{sense}{state}
+        \end{call}
+        \begin{callself}{ps}{PhysicsUpdate()}{}
+        \end{callself}
+        \begin{call}{ps}{PostPhysicsUpdate()}{sense}{}
+        \end{call}
+      \end{call}
+      \begin{call}{ss}{EndCycle()}{ctr}{}
+        \begin{call}{ctr}{SenseAgent()}{sense}{}
+        \end{call}
+      \end{call}
+     \end{sdblock}
+\end{sequencediagram}
+\caption{UML test}
+\end{figure}
 
 
 \section{表格}
