@@ -7,12 +7,14 @@
 \usepackage{hyperref} % 超链接
 \usepackage{xeCJKfntef} % 提供下划线，删除线等特效
 \usepackage{indentfirst} %提供中文首行缩进
-\usepackage{listings} % 引用编程语言
-\usepackage{fancyhdr} % 管理页眉页脚
 \usepackage{bbding} % 一些有意思的符号
 \usepackage{tikz}
 \usepackage{pgf-umlsd} % 画UML图
 \usepgflibrary{arrows} % pgf-umlsd需要
+\usepackage{listings} % 引用编程语言
+\usepackage{fancyhdr} % 管理页眉页脚
+\usepackage{flowchart} % 绘制流程图
+\usetikzlibrary{arrows} % flowchart需要
 
 %\textwidth=350pt \textheight=22cm
 
@@ -53,14 +55,30 @@
 
 % 目录
 \newpage
-\tableofcontents
+\tableofcontents                
 \newpage
 \listoffigures
 \newpage
 \listoftables
 
+
 \newpage % 新一页
 \pagenumbering{arabic}
+%% 页眉页脚 %% 一般，页眉从正文首页开始，目录部分没有页眉，只有页脚的罗马数字页码
+\pagestyle{fancy}
+\newsavebox{\headpic}
+\sbox{\headpic}{\includegraphics{headLogo.png}}
+\lhead{}
+\chead{\usebox{\headpic}民用遥感卫星海军应用系统数据存储管理分系统详细设计}
+\rhead{}
+\lfoot{中国航天科技集团公司五院西安分院}
+\cfoot{}
+\rfoot{第\thepage 页}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%% end
+
+
 %\setcounter{page}{1} 设置这里页码从1重新开始
  正文开始
  \section{概述}
@@ -201,6 +219,37 @@
 \caption{UML test}
 \end{figure}
 
+\subsubsection{流程图}
+\begin{figure}[!ht]
+  \centering
+  \begin{tikzpicture}
+    \node (start) at (0,0) [draw, terminal] {开始};
+    \node (task) at (0,-1) [draw, predproc] {收到任务请求};
+    \node (listen) at (0,-2) [draw, process] {开启socket};
+    \node (receive) at (0,-3) [draw, predproc] {接收业务数据};
+    \coordinate (pt1) at (3,-5) ;
+    \node (check) at (0,-4) [draw, process] {规范化检验};
+    \node (draw) at (0,-5) [draw, process] {提取业务信息};
+    \node (index) at (0,-6) [draw, process] {生成编目信息};
+    \node (savedb) at (0,-7) [draw, process] {编目信息入库};
+    \node (saveyun) at (0,-8) [draw, process] {数据文件存储归档};
+    \node (finish) at (0,-9) [draw, predproc] {收到任务结束信息};
+    \node (end) at (0,-10) [draw, terminal] {结束};
+    \draw[->] (start) -- (task);
+    \draw[->] (task) -- (listen);
+    \draw[->] (listen) -- (receive);
+    \draw[->] (receive) -- (check);
+    \draw[->] (check) -- (draw);
+    \draw[->] (draw) -- (index);
+    \draw[->] (index) -- (savedb);
+    \draw[->] (savedb) -- (saveyun);
+    \draw[->] (saveyun) -| (pt1) |- (receive);
+    \draw[->] (saveyun) -- (finish);
+    \draw[->] (finish) -- (end);
+    \end{tikzpicture}
+\caption{数据编目软件执行流程图}
+\label{fig:dp_timer}
+\end{figure}
 
 \section{表格}
 表格前的正文说明
@@ -234,9 +283,6 @@
 \section{超链接}
 \url{http://192.169.1.254/bbs}\\
 \href{http://192.169.1.254/bbs}{这是我们的BBS}
-
-
-\section{页眉页脚} %TODO
 
 
 \section{xeCJK}
