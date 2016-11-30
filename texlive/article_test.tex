@@ -7,24 +7,24 @@
 \usepackage{hyperref} % 超链接
 \usepackage{xeCJKfntef} % 提供下划线，删除线等特效
 \usepackage{indentfirst} %提供中文首行缩进
+\usepackage{bbding} % 一些有意思的符号
+\usepackage{tikz}
+\usepackage{pgf-umlsd} % 画UML图
+\usepgflibrary{arrows} % pgf-umlsd需要
 \usepackage{listings} % 引用编程语言
 \usepackage{fancyhdr} % 管理页眉页脚
-\usepackage{bbding} % 一些有意思的符号
+\usepackage{flowchart} % 绘制流程图
+\usetikzlibrary{arrows} % flowchart需要
+
 %\textwidth=350pt \textheight=22cm
 
-
-% config chinese lang
 \usepackage{xeCJK}
-%  config font
-%\usepackage{fontspec}
 \setCJKmainfont{微软雅黑}
-% useable fonts: 宋体，微软雅黑
 {\newCJKfontfamily\kai{楷体_GB2312}}
 {\newCJKfontfamily\song{宋体}}
 {\newCJKfontfamily\hei{黑体}}
 {\newCJKfontfamily\yahei{微软雅黑}}
 {\newCJKfontfamily\zhei{文泉驿正黑}}
-
 
 
 % 中文化配置
@@ -55,26 +55,42 @@
 
 % 目录
 \newpage
-\tableofcontents
+\tableofcontents                
 \newpage
 \listoffigures
 \newpage
 \listoftables
 
+
 \newpage % 新一页
 \pagenumbering{arabic}
+%% 页眉页脚 %% 一般，页眉从正文首页开始，目录部分没有页眉，只有页脚的罗马数字页码
+\pagestyle{fancy}
+\newsavebox{\headpic}
+\sbox{\headpic}{\includegraphics{headLogo.png}}
+\lhead{}
+\chead{\usebox{\headpic}民用遥感卫星海军应用系统数据存储管理分系统详细设计}
+\rhead{}
+\lfoot{中国航天科技集团公司五院西安分院}
+\cfoot{}
+\rfoot{第\thepage 页}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%% end
+
+
 %\setcounter{page}{1} 设置这里页码从1重新开始
-正文开始
+ 正文开始
  \section{概述}
  本文是latex的文档样例文件，大多数常用的latex命令用法\\在这里都应该有。
  如果没有，那就是你不需要的！
   % \\是换行，空行则表示下一段落，段落头会有indent
 
- 概述页的第二段说明，本段没啥说的。注意本段有intent。
+  概述页的第二段说明，本段没啥说的。注意本段有intent。
 
- {\Huge 概述第三段，本段测试下自动换行，即超过一行长度的文本，看latex怎么处理。为了方便超过一行，所以使用了Huge级别的字。}
- {\kill 本行不打印}
- \pagebreak
+  {\Huge 概述第三段，本段测试下自动换行，即超过一行长度的文本，看latex怎么处理。为了方便超过一行，所以使用了Huge级别的字。}
+% {\kill 本行不打印 } %% \kill 和tikz有冲突
+  \pagebreak
 
  
  \section[pz字体]{配置字体} % pz字体 是出现在目录中的文字，配置字体 是这个位置显示的文字
@@ -181,7 +197,71 @@
 
 \subsection{矢量绘图}
 文档上介绍的几个太复杂了，先用dot吧\\
+\subsection{UML绘图}
+\subsubsection{时序图}
+\begin{figure}
+  \centering
+\begin{sequencediagram}
+  \newthread{ss}{SimulationServer}
+    \newinst[2]{ctr}{SimControlNode}
+    \newinst[2]{ps}{PhysicsServer}
+    \newinst[2]{sense}{SenseServer}
 
+    \begin{call}{ss}{Initialize()}{sense}{}
+    \end{call}
+    \begin{sdblock}{Run Loop}{in a block}
+      \begin{call}{ss}{StartCycle()}{ctr}{}
+        \begin{call}{ctr}{ActAgent()}{sense}{}
+        \end{call}
+      \end{call}
+      \begin{call}{ss}{Update()}{ps}{}
+        \begin{call}{ps}{PrePhysicsUpdate()}{sense}{state}
+        \end{call}
+        \begin{callself}{ps}{PhysicsUpdate()}{}
+        \end{callself}
+        \begin{call}{ps}{PostPhysicsUpdate()}{sense}{}
+        \end{call}
+      \end{call}
+      \begin{call}{ss}{EndCycle()}{ctr}{}
+        \begin{call}{ctr}{SenseAgent()}{sense}{}
+        \end{call}
+      \end{call}
+     \end{sdblock}
+\end{sequencediagram}
+\caption{UML test}
+\end{figure}
+
+\subsubsection{流程图}
+\begin{figure}[!ht]
+  \centering
+  \begin{tikzpicture}
+    \node (start) at (0,0) [draw, terminal] {开始};
+    \node (task) at (0,-1) [draw, predproc] {收到任务请求};
+    \node (listen) at (0,-2) [draw, process] {开启socket};
+    \node (receive) at (0,-3) [draw, predproc] {接收业务数据};
+    \coordinate (pt1) at (3,-5) ;
+    \node (check) at (0,-4) [draw, process] {规范化检验};
+    \node (draw) at (0,-5) [draw, process] {提取业务信息};
+    \node (index) at (0,-6) [draw, process] {生成编目信息};
+    \node (savedb) at (0,-7) [draw, process] {编目信息入库};
+    \node (saveyun) at (0,-8) [draw, process] {数据文件存储归档};
+    \node (finish) at (0,-9) [draw, predproc] {收到任务结束信息};
+    \node (end) at (0,-10) [draw, terminal] {结束};
+    \draw[->] (start) -- (task);
+    \draw[->] (task) -- (listen);
+    \draw[->] (listen) -- (receive);
+    \draw[->] (receive) -- (check);
+    \draw[->] (check) -- (draw);
+    \draw[->] (draw) -- (index);
+    \draw[->] (index) -- (savedb);
+    \draw[->] (savedb) -- (saveyun);
+    \draw[->] (saveyun) -| (pt1) |- (receive);
+    \draw[->] (saveyun) -- (finish);
+    \draw[->] (finish) -- (end);
+    \end{tikzpicture}
+\caption{数据编目软件执行流程图}
+\label{fig:dp_timer}
+\end{figure}
 
 \section{表格}
 表格前的正文说明
@@ -215,9 +295,6 @@
 \section{超链接}
 \url{http://192.169.1.254/bbs}\\
 \href{http://192.169.1.254/bbs}{这是我们的BBS}
-
-
-\section{页眉页脚} %TODO
 
 
 \section{xeCJK}
