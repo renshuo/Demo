@@ -1,0 +1,30 @@
+\documentclass[a4paper,12pt]{article} 
+\usepackage{tikz}
+\usepackage{xeCJK}
+\usetikzlibrary{mindmap,trees}
+
+
+\begin{document}
+\tikz[mindmap,concept color=red, text=black]
+\node [concept] {装修}
+[clockwise from =0]
+child[concept color=blue,text=white]{
+  node[concept]{卧室\\主卧}
+}
+child{
+  node[concept]{卧室\\次卧1}
+  child{node[concept]{床}}
+  child{node[concept]{窗帘}}
+}
+child[concept color=blue, text=white]{
+  node[concept]{卧室\\次卧2}
+}
+child[concept color=red, text=white]{
+  node[concept]{厨房}
+}
+child[concept color=red, text=white]{
+  node[concept]{餐厅}
+}
+
+;
+\end{document}
