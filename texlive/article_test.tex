@@ -15,6 +15,7 @@
 \usepackage{fancyhdr} % 管理页眉页脚
 \usepackage{flowchart} % 绘制流程图
 \usetikzlibrary{arrows} % flowchart需要
+\usepackage{float} % 提供固定位置表格（即非浮动表格/图像功能） 在表格中使用 H 表示强制here
 
 %\textwidth=350pt \textheight=22cm
 
@@ -232,7 +233,7 @@
 \end{figure}
 
 \subsubsection{流程图}
-\begin{figure}[!ht]
+\begin{figure}[H]
   \centering
   \begin{tikzpicture}
     \node (start) at (0,0) [draw, terminal] {开始};
