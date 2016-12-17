@@ -7,9 +7,11 @@
 \usetikzlibrary{shapes.geometric} % 图形库
 \usetikzlibrary{shadings} % 渐变色
 \usetikzlibrary{shadows} % 阴影
+\usetikzlibrary{positioning} % 提供node的位置描述特性
 \usepackage{xcolor}
 
 
+\pagestyle{empty}
 \begin{document}
 
 \tikzstyle{sysBase} = [
@@ -17,14 +19,17 @@
   shade, ball color=green, drop shadow,
   text badly centered, inner sep=4mm]
 \tikzstyle{sys1} = [
-  sysBase, top color=white, bottom color=blue
-  ]
-
+  sysBase, top color=blue, bottom color=blue, middle color=white
+]
+\tikzstyle{sys2} = [
+  sysBase, top color=white, bottom color=blue,
+]
 
 \section{my design}
 \tikz{
-  \node[sys1]  at (0,0) {\Huge{存储管理分系统}};
-  \node[sys1, left color=green, right color=green, middle color=white!80] at (6, 0) {应用处理子系统};  
+  \node[sys1] (st1)  at (0,0) {\Huge{存储管理分系统}};
+  \node[sys2, right=of st1] {\Huge{任务管理分系统}};   
+  \node[sys1, below=of st1,left color=green, right color=green, middle color=white!80]  {应用处理子系统};  
 
 }
 
@@ -39,6 +44,7 @@
 \testcolor{x-red-y}
 \testcolor{x-green-y}
 \testcolor{x-blue-y}
+\testcolor[hsb]{0.4,0.8,0.4}
 \testcolor[cmyk]{0,0,.5,.5}
 \testcolor[rgb:cmyk]{0,0,.5,.5}
 \end{testcolors}
