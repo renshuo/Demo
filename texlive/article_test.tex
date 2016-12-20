@@ -1,5 +1,7 @@
 \documentclass[a4paper,12pt]{article} % 使用a4纸，12pt字体
 \usepackage{fullpage} % use 1 inch margins
+%%% fullpage 和 fancyhdr有冲突，会导致第一个有页眉的页面中，正文和页眉重叠
+%%% 另外，fullpage也会使其余页面的页眉离正文过近（几乎要重叠）
 \usepackage{tabularx}
 \usepackage{booktabs} % 提供 \toprule, midrule, bottomrule 用于表格横线
 \usepackage{graphicx} % 插入图片
