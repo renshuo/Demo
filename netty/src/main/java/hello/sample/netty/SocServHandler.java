@@ -1,6 +1,7 @@
 package hello.sample.netty;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufInputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
@@ -33,18 +34,18 @@ public class SocServHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf in = (ByteBuf) msg;
+        int i = 0;
+        byte[] buf = new byte[1048576];
         try {
-            int i = in.readableBytes();
-            sumx += i;
-            sumc ++;
-            byte[] buf = new byte[i];
             while (in.isReadable()) { // (1)
-                in.readBytes(buf);
-                fos.write(buf);
-                fos.flush();
-//                if (sumc%100==0){
-//                    System.out.println(sumc+": "+i+": "+sumx+": "+(sumx/sumc));
-//                }
+                i = in.readableBytes();
+                if (i>1048576){
+                    i = 1048576;
+                }
+                in.readBytes(buf, 0, i);
+                sumx += i;
+                sumc ++;
+                fos.write(buf, 0, i);
             }
         } finally {
             ReferenceCountUtil.release(msg); // (2)
@@ -54,6 +55,8 @@ public class SocServHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("#### channel inactive -----");
+        fos.flush();
+        System.out.println(""+(sumx)+": "+(sumx/sumc));
         ctx.write(System.currentTimeMillis());
         ctx.flush();
     }
