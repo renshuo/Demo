@@ -18,7 +18,10 @@ import java.util.Date;
 public class SocServHandler extends ChannelInboundHandlerAdapter {
 
 
+    public static final int BUFFER_SIZE = 1048576;
     private FileOutputStream fos;
+    static long sumx = 0;
+    static long sumc = 0;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -29,18 +32,16 @@ public class SocServHandler extends ChannelInboundHandlerAdapter {
         ctx.flush();
     }
 
-    static long sumx = 0;
-    static long sumc = 0;
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf in = (ByteBuf) msg;
         int i = 0;
-        byte[] buf = new byte[1048576];
+        byte[] buf = new byte[BUFFER_SIZE];
         try {
             while (in.isReadable()) { // (1)
                 i = in.readableBytes();
-                if (i>1048576){
-                    i = 1048576;
+                if (i>BUFFER_SIZE){
+                    i = BUFFER_SIZE;
                 }
                 in.readBytes(buf, 0, i);
                 sumx += i;
@@ -56,6 +57,7 @@ public class SocServHandler extends ChannelInboundHandlerAdapter {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("#### channel inactive -----");
         fos.flush();
+        fos.close();
         System.out.println(""+(sumx)+": "+(sumx/sumc));
         ctx.write(System.currentTimeMillis());
         ctx.flush();
