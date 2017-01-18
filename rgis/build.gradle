@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+group '3rd'
+version '0.1'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven { url "http://192.169.1.254:9080/repository/maven-public/" }
+}
+
+dependencies {
+    compile fileTree(dir:'libs', include: '*.jar')
+
+}
+
+mainClassName = ''
