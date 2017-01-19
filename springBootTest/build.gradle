@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
+        classpath 'org.springframework:springloaded:1.2.6.RELEASE'
     }
 }
 
@@ -11,15 +12,28 @@ plugins {
     id 'java'
     id 'idea'
     id 'org.springframework.boot' version '1.4.3.RELEASE'
+    id 'war'
 }
 
 group '3rd'
 version '0.1'
 
-jar {
-    baseName = 'myproject'
-    version =  '0.0.1-SNAPSHOT'
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
 }
+
+
+springBoot  {
+    buildInfo()
+}
+
+//jar {
+//    baseName = 'myproject'
+//    version =  '0.0.1-SNAPSHOT'
+//}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -41,50 +55,61 @@ ext {
 
 dependencies {
     compile fileTree(dir:'libs', include: '*.jar')
-
-    compile("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
-    //compile("org.springframework.boot:spring-boot-gradle-tests:$springBootVersion")
-
     //sample
     runtime("org.springframework.boot:spring-boot-samples:1.0.0.RC5")
 
-    //all starters
+    compile("org.springframework.boot:spring-boot-devtools")
+
+
     compile("org.springframework.boot:spring-boot-starters:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-websocket:$springBootVersion")
-    //compile("org.springframework.boot:spring-boot-starter-web-services:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-velocity:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-validation:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-shell-remote:1.0.0.RC4")
-    compile("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
-    //compile("org.springframework.boot:spring-boot-starter-redis:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-mail:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-logging:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-log4j2:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-hateoas:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-data-solr:$springBootVersion")
-    //compile("org.springframework.boot:spring-boot-starter-data-neo4j:$springBootVersion")
-    //compile("org.springframework.boot:spring-boot-starter-data-cassandra:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-cache:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-batch:$springBootVersion")
+    //all starters
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-web-services:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-artemis:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-mail:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-data-redis:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-activemq:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-integration:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-validation:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-hateoas:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-jersey:$springBootVersion")
+    //compile("org.springframework.boot:spring-boot-starter-data-neo4j:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-websocket:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-amqp:$springBootVersion")
-    //compile("org.springframework.boot:spring-boot-starter-activemq:$springBootVersion")
-
-    compile("org.springframework.boot:spring-boot-starter-web:$springBootVersion")
-    compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+    //compile("org.springframework.boot:spring-boot-starter-data-cassandra:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-security:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-mustache:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-velocity:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-freemarker:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-batch:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-cache:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-data-solr:$springBootVersion")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:$springBootVersion")
-    //compile("org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion") // for html template
+    compile("org.springframework.boot:spring-boot-starter-jooq:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-cloud-connectors:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion")
+
+    compile("org.springframework.boot:spring-boot-starter-actuator:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-remote-shell:$springBootVersion")
+
+    compile("org.springframework.boot:spring-boot-starter-undertow:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-jetty:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-tomcat:$springBootVersion")
+
+    //compile("org.springframework.boot:spring-boot-starter-logging:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-starter-log4j2:$springBootVersion")
+
 
     compile("io.springfox:springfox-swagger2:$swaggerVersion") // for API doc
     compile("io.springfox:springfox-swagger-ui:$swaggerVersion")
 
-    // AOP for logging
-    compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
+
     compile "org.postgresql:postgresql:9.4-1206-jdbc42"
+    compile "org.hsqldb:hsqldb"
 
     compile 'org.quartz-scheduler:quartz:2.2.1'
     compile 'com.google.guava:guava:20.0'
@@ -92,4 +117,8 @@ dependencies {
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 }
 
-//mainClassName = 'hello.SampleController'
+configurations {
+    all*.exclude module : 'spring-boot-starter-logging'
+    // for using log4j2,
+}
+
