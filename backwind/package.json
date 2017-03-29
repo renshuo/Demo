@@ -1,0 +1,16 @@
+{
+  "name": "backwind",
+  "version": "1.0.0",
+  "description": "my test app",
+  "main": "index.js",
+  "dependencies": {
+    "electron": "^1.4.15"
+  },
+  "devDependencies": {},
+  "scripts": {
+      "start": "electron ." ,
+	  "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sren",
+  "license": "ISC"
+}
