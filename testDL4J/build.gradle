@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'scala'
+    id 'application'
+}
+
+group 'testDL4j'
+version '0.1'
+
+sourceCompatibility = 1.8
+
+ext {
+    dl4jVersion = '1.0.0-beta4'
+    scalaVersion = "2.12.8"
+}
+repositories {
+    //mavenCentral()
+    maven {
+        url 'https://maven.aliyun.com/repository/public/'
+    }
+}
+
+dependencies {
+
+    compile "org.scala-lang:scala-library:$scalaVersion"
+    compile "org.scala-lang:scala-compiler:$scalaVersion"
+    compile "org.scala-lang:scala-reflect:$scalaVersion"
+
+    implementation "org.slf4j:slf4j-api:1.7.28"
+    // implementation "org.slf4j:slf4j-simple:1.7.28"
+    // implementation "ch.qos.logback:logback-classic:1.2.3"
+    // implementation "org.slf4j:slf4j-log4j12:1.7.28"
+    // implementation "org.slf4j:slf4j-jdk14:1.7.28"
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.12.1"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.9.9.3"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.9"
+
+
+    implementation "org.deeplearning4j:deeplearning4j-core:$dl4jVersion"
+    implementation "org.deeplearning4j:deeplearning4j-cuda-10.1:$dl4jVersion"
+    //implementation "org.nd4j:nd4j-native-platform:$dl4jVersion"
+    implementation "org.nd4j:nd4j-cuda-10.1-platform:$dl4jVersion"
+    implementation "org.bytedeco.javacpp-presets:cuda:10.0-7.4-1.4.4:linux-x86_64-redist"
+
+//    implementation "org.scalanlp:breeze_2.12:1.0"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+mainClassName = "test.main"
