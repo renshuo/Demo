@@ -1,4 +1,5 @@
 \documentclass[a4paper,12pt]{article} % 使用a4纸，12pt字体
+
 \usepackage{fullpage} % use 1 inch margins
 %%% fullpage 和 fancyhdr有冲突，会导致第一个有页眉的页面中，正文和页眉重叠
 %%% 另外，fullpage也会使其余页面的页眉离正文过近（几乎要重叠）
@@ -270,7 +271,8 @@
 表格前的正文说明
 \begin{table}[!th]
 \begin{tabular}{|l|c|c|c|c|r|}
-\toprule
+
+  \toprule
 1	&存款	&30	&5	&登录，打开存款界面，存入10元，转到我的账户余额，检查余额增加了10元	&需要UML顺序图	\\
 \midrule
 2	&查看自己的交易明细 &10 &5 &登录，点击交易，存钱，返回交易页面，看到新的存款显示。 &使用分页技术避免大规模数据库查询 \\
