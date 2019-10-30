@@ -15,5 +15,11 @@ out/
 .gradle
 gradle-app.setting
 build/
-
-
+/javafx/scalafx/gradle/wrapper/gradle-wrapper.jar
+/javafx/scalafx/gradle/wrapper/gradle-wrapper.properties
+/javafx/scalafx/gradlew
+/javafx/scalafx/gradlew.bat
+/javafx/tornadoFx/gradle/wrapper/gradle-wrapper.jar
+/javafx/tornadoFx/gradle/wrapper/gradle-wrapper.properties
+/javafx/tornadoFx/gradlew
+/javafx/tornadoFx/gradlew.bat
