@@ -1,0 +1,268 @@
+\documentclass[UTF8]{ctexbeamer}
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+
+%% listings config
+\lstset{
+  columns=fixed,
+  language=java,
+  numbers=left,
+  numberstyle=\tiny,
+  basicstyle=\small
+}
+
+\begin{document}
+
+\begin{frame}
+  \title{kotlin入门基础} \author{sren} \date{\today}
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  \normalsize
+  \tableofcontents
+\end{frame}
+
+
+\section{kotlin简介}
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+
+\begin{frame}{kotlin起源}
+  kotlin是JetBrains公司设计的基于Jvm的静态编程语言，目的是成为更好的Java，在
+  kotlin中改进Java语言的一些问题。
+  kotlin编译的输出是Jvm字节码，在Jvm上运行。kotlin也可以编译为Javascript在浏览器
+  中运行，或者编译为机器码在操作系统中运行。\\
+  \vspace{5em}
+  \zihao{-5}JetBrains: JetBrains成立于2000年，是一家捷克的软件公司，是 IntelliJ IDEA等一系列IDE的开发商。
+\end{frame}
+
+\begin{frame}{kotlin的现状}
+  \begin{itemize}
+  \item 一个“更好的Java” 
+  \item Google将kotlin做为Andorid的官方语言
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{kotlin特性}
+  \begin{itemize}
+  \item 支持与Java混合编程
+  \item 可以编译为JavaScript或机器码，支持在浏览器，Ios，MacOS等各种环境下运行
+  \item 支持协程
+  \item 大量的语法糖
+  \item 函数式编程元素
+  \end{itemize}
+\end{frame}
+
+
+\section{kotlin基本语法}
+\frame{\tableofcontents[currentsection]}
+\begin{frame}[fragile]{Hello World}
+\begin{lstlisting}
+package my.demo
+
+import kotlin.text.*
+
+fun main() {
+    println(“hello world”)
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{类，对象}
+\begin{lstlisting}
+class Abc(val va1: String, var va2: Int) : Zyx() {
+
+  val constV1 = 0
+  init {
+    // first init
+  }
+  
+  var variable2 = 1
+  init {
+    // second init
+  }
+
+  late init var vari3
+  
+  constructor() {
+    // 
+  }
+}
+
+val abc: Abc = Abc()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{类函数}
+\begin{lstlisting}
+class Abc{
+  private fun func1(in1: String = "default", in2　Int): String {
+     val str:String = this.func1("abc", 2)   
+  }
+  
+  fun <T> func2(in1: T, dts: Int): List<T> {
+      val res: List<Int> = this.func2(0, 13)
+  }
+
+  fun func3(in1: Int=0, cls: (it:String)-> Unit) {
+     val r1: Int = this.func3(0,{it:String -> ... })
+     val r2: Int = this.func3(0){it:String -> ... }
+  }
+}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{数据类}
+\begin{lstlisting}
+data class Person(val name:String){
+  var age = 0
+}
+\end{lstlisting}
+  相当于Java的：
+\begin{lstlisting}
+class Person{
+  String name;
+  Int age;
+
+  public String getName(){ return this.name}
+  public void setName(String name){ this.name = name}
+  public Int getAge(){ return this.age}
+  public void setAge(Int age){ this.age = age}
+
+  public String toString(){
+    return StringBuilder.build().apppend("Person {")...
+  }
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{对象}
+\begin{lstlisting}
+val a = object {
+  var x: Int = 0
+  var y: Int = 1
+}
+print(a.x + a.y)
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Lambda表达式}
+定义一个lambda表达式
+\begin{lstlisting}
+ val sum: (Int, Int) -> Int = {x:Int, y:Int -> x+y }
+
+ val sum = {x, y -> x+y }
+\end{lstlisting}
+ \vspace{40pt}
+调用Lambda，将Lambda表达式作为参数传递
+\begin{lstlisting}
+ val headSize = 2
+ val result = list.map { it ->
+   it.subString(headSize)
+ }
+\end{lstlisting}
+\end{frame}
+
+
+\section{重要特性}
+\frame{\tableofcontents[currentsection]}
+\begin{frame}[fragile]{空安全}
+  kotlin空安全是对Java中的NPE（NullPointerException)的一个解决方案，其做法是限制
+  null值的产生，且默认情况下，变量必然不为空
+  \\
+  相关操作：
+\begin{lstlisting}
+var a: String ="abc"
+a = null // error
+
+var b: String? ="abc"
+b = null // ok
+
+println(b?.length) //if b==null then null else b.length
+println(b?.length ?: -1) // if b==null then -1 else b.length
+
+println(b!!.length) // if b==null then throw NPE
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{解构}
+\begin{lstlisting}
+data class A(x: Int, y: Int)
+
+fun test(): A {}
+
+val (x, y) = test()
+val (_, y) = test()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{扩展}
+  kotlin可以对一个类的属性和方法进行扩展，且不需要继承：
+\begin{lstlisting}
+fun String.printLog(){
+  print(this.value)
+}
+\end{lstlisting}
+  扩展String类，增加printLog方法。
+\end{frame}
+
+
+\begin{frame}[fragile]{集合操作}
+\begin{lstlisting}
+val list = listof(1, 2, 3)
+val l2 = list.map { it + 1 }
+val l1 = list.filter { it > 1 }
+val l3 = lsit.take(2)
+val l4 = list.group { it }
+val l5 = list.sortedBy { 3-it}
+val l6 = list.sumBy { it * 2}
+val l7 = list.reduce { sum, item -> sum + item }
+\end{lstlisting}
+\end{frame}
+
+% \begin{frame}[fragile]{协程}
+%   轻量级的线程\\
+%   非常高的执行效率，不需要线程锁，没有资源冲突
+  
+  
+% \begin{lstlisting}
+% import kotlinx.coroutines
+% \end{lstlisting}
+
+%   参考资料：
+%   \url{https://www.kotlincn.net/docs/reference/coroutines/coroutines-guide.html}
+%   % \hyperref[kkotl]{https://www.kotlincn.net/docs/reference/coroutines/coroutines-guide.html}
+
+% \end{frame}
+
+\section{工程管理}
+\frame{\tableofcontents[currentsection]}
+\begin{frame}[fragile]{利用gradle管理项目}
+  gradle是基于apache ant和maven概念的项目自动化构建工具，gradle基于groovy语言编
+  写。也支持基于kotlin编写构建脚本。目前支持Java，Groovy，kotlin，scala等Jvm语言。\\
+  \vspace{1em}
+  gradle构建内容：
+  \begin{enumerate}
+  \item 源代码管理
+  \item 依赖管理
+  \item 编译
+  \item 测试
+  \item 打包
+  \end{enumerate}
+  % \hyperref[build.gradle]{./resource/build.gradle}
+  \href{./resource/build.gradle}{bu
+    ild.grale}
+\end{frame}
+
+
+% \begin{frame}[fragile]{a}
+% \begin{lstlisting}
+% \end{lstlisting}
+% \end{frame}
+
+\end{document}
