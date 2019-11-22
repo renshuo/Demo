@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'scala'
+}
+
+group 'scala_hello'
+version '1'
+
+sourceCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    scalaVersion = "2.13.1"
+}
+
+dependencies {
+    implementation "org.scala-lang:scala-library:$scalaVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
