@@ -1,19 +1,24 @@
 <template>
   <div class="hello">
-    <p>{{freq}}</p>
+    <div ref="state"> </div>
     <div ref="cav1" id="canvas1"></div>
   </div>
 </template>
 
 <script>
 import * as three from 'three'
+import Stats from 'stats.js'
+
 
 let scene = null
 let camera = null
 let renderer = null
 
+let stats = new Stats()
+stats.showPanel(0)
+document.body.appendChild(stats.dom)
+
 let objs = []
-let i = 0
 
 function generateLine(size, color, y0, height) {
   let geometry = new three.BufferGeometry()
@@ -33,7 +38,7 @@ function generateLine(size, color, y0, height) {
   let material = new three.LineBasicMaterial({color})
   let mesh = new three.Line(geometry, material)
   mesh.userData = {
-    y0, height
+    y0, height, xx: 1
   }
   objs.push(mesh)
   scene.add(mesh)
@@ -46,11 +51,23 @@ function init(container) {
   camera.position.z = 3000
   scene.add(camera)
 
-  let size = 60000
-  generateLine(size, 0x00ff00, 0, 90)
-  generateLine(size, 0xff0000, 100, 90)
-  generateLine(size, 0x0000ff, -100, 90)
-  
+  let size = 30000
+  generateLine(size, 0x00ff00, 200, 80)
+  generateLine(size, 0xff0000, 100, 80)
+  generateLine(size, 0x0000ff, 300, 80)
+
+  generateLine(size, 0x00ff00, 500, 80)
+  generateLine(size, 0xff0000, 400, 80)
+  generateLine(size, 0x0000ff, 600, 80)
+
+  generateLine(size, 0x00ff00, -100, 80)
+  generateLine(size, 0xff0000, -200, 80)
+  generateLine(size, 0x0000ff, 0, 80)
+
+  generateLine(size, 0x00ff00, -400, 80)
+  generateLine(size, 0xff0000, -500, 80)
+  generateLine(size, 0x0000ff, -300, 80)
+
   renderer = new three.WebGLRenderer()
   renderer.setSize(800, 600)
   container.appendChild(renderer.domElement)
@@ -58,17 +75,22 @@ function init(container) {
 
 function ani () {
   requestAnimationFrame(ani)
+  stats.begin()
   for(let i=0; i<objs.length; i++){
     let line = objs[i]
     let ps = line.geometry.getAttribute('position').array
     for(let j=0; j<ps.length/3; j++) {
       let y = j*3+1
       ps[y] =  Math.random()*line.userData.height - line.userData.height/2 + line.userData.y0
+      let x = j*3
+      ps[x] = ps[x] * line.userData.xx
+      //line.userData.xx ++
+
     }
     line.geometry.setAttribute('position', new three.Float32BufferAttribute(ps, 3))
     line.geometry.computeBoundingSphere()
   }
-  i++
+  stats.end()
   renderer.render(scene, camera)
 }
 
@@ -80,18 +102,12 @@ export default {
   },
   data (){
     return {
-      lasti: 0,
-      freq: 0
   }},
   methods: {
   },
   mounted () {
     init(this.$refs.cav1)
     ani()
-    this.timer = setInterval(()=>{
-      this.freq = i - this.lasti
-      this.lasti = i
-    }, 1000)
   }
 }
 </script>
