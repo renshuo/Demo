@@ -23,6 +23,7 @@ dependencies {
     //jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.1")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.10.1")
 
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
 }
