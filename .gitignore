@@ -23,3 +23,6 @@ build/
 /javafx/tornadoFx/gradle/wrapper/gradle-wrapper.properties
 /javafx/tornadoFx/gradlew
 /javafx/tornadoFx/gradlew.bat
+/webgl/webgl_point_test_server/gradle
+/webgl/webgl_point_test_server/gradlew
+/webgl/webgl_point_test_server/gradlew.bat
