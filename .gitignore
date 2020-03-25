@@ -12,8 +12,6 @@ out/
 .settings
 
 #gradle temp 
-.gradle
-gradle-app.setting
 build/
 /javafx/scalafx/gradle/wrapper/gradle-wrapper.jar
 /javafx/scalafx/gradle/wrapper/gradle-wrapper.properties
@@ -26,3 +24,6 @@ build/
 /webgl/webgl_point_test_server/gradle
 /webgl/webgl_point_test_server/gradlew
 /webgl/webgl_point_test_server/gradlew.bat
+/**/gradlew*
+/**/gradle*
+/**/.gradle

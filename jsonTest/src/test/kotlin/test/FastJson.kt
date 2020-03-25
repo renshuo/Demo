@@ -29,6 +29,11 @@ data class Jsa(
     val id: Int,
     val name: String,
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    val time: LocalDateTime
+    val time: LocalDateTime,
+    val dataList: List<Jsb> = listOf(Jsb("1"), Jsb("2"))
 ){
 }
+
+data class Jsb(
+        val seq: String = "1"
+)
