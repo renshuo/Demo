@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 
 data class Jack(
     val id: Int = 0
-
 ){
     @JacksonXmlElementWrapper(localName="listList")
     @JacksonXmlProperty(localName = "listElm")
@@ -16,8 +15,6 @@ data class Jack(
     override fun toString(): String {
         return "Jack(id=$id, subJackList=$subJackList)"
     }
-
-
 }
 
 data class SubJack(
