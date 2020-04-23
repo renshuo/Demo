@@ -1,0 +1,46 @@
+Configuration:
+  status: debug
+  name: YAMLConfigTest
+  properties:
+    property:
+      name: filename
+      value: server.log
+  thresholdFilter:
+    level: debug
+
+  appenders:
+    Console:
+      name: STDOUT
+      PatternLayout:
+        Pattern: "%d %p %C{1.} [%t] %m%n"
+    File:
+      name: File
+      fileName: ${filename}
+      PatternLayout:
+        Pattern: "%d %p %C{1.} [%t] %m%n"
+      Filters:
+        ThresholdFilter:
+          level: DEBUG
+
+  Loggers:
+    logger:
+      -
+        name: org.apache.logging.log4j.test1
+        level: debug
+        additivity: false
+      -
+        name: org.apache.logging.log4j.test2
+        level: debug
+        additivity: false
+      -
+        name: io.netty.handler.codec.http.websocketx
+        level: info
+    #      -
+    #        name: yg
+    #        level: info
+    #        AppenderRef:
+    #          ref: File
+    Root:
+      level: debug
+      AppenderRef:
+        ref: STDOUT
