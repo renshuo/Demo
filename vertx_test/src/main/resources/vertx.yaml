@@ -8,6 +8,11 @@ WebVerticle:
   config:
     port: 8082
 
+WebSockJsVerticle:
+  config:
+    port: 8083 # for http server use
+    heartbeatInterval: 25000 # millisecond
+    sessionTimeout: 5 # second
 
 isEnableNanoServer: false
 
