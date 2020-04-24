@@ -15,6 +15,7 @@ fun main() {
         val result = it.result()
         val newVx = Vertx.vertx(VertxOptions(result))
         newVx.deployVerticle(CoroutineVerticleTest(), DeploymentOptions(result.getJsonObject("CoroutineVerticleTest")))
+        newVx.deployVerticle(WebVerticle(), DeploymentOptions(result.getJsonObject("WebVerticle")))
     }
 
 }

@@ -4,6 +4,11 @@ CoroutineVerticleTest:
   worker: false # default is false
   multiThreaded: false # default is false
 
+WebVerticle:
+  config:
+    port: 8082
+
+
 isEnableNanoServer: false
 
 influxdb:
