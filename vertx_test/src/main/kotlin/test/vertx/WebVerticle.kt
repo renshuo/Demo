@@ -1,10 +1,7 @@
 package test.vertx
 
-import io.netty.handler.codec.http.HttpRequest
-import io.vertx.core.Handler
 import io.vertx.core.eventbus.Message
 import io.vertx.core.http.HttpServerOptions
-import io.vertx.ext.web.Route
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.StaticHandler
@@ -12,9 +9,7 @@ import io.vertx.kotlin.core.eventbus.requestAwait
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.kotlin.coroutines.awaitResult
 import io.vertx.kotlin.coroutines.dispatcher
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newCoroutineContext
+import kotlinx.coroutines.*
 import kotlin.system.exitProcess
 
 class WebVerticle : CoroutineVerticle() {
@@ -30,11 +25,15 @@ class WebVerticle : CoroutineVerticle() {
             log.error("", it.failure())
         }
 
-        server.requestHandler(router).listen(){
+        router.get("/test2").handler(this::testAwait).failureHandler {
+            log.error("", it.failure())
+        }
+
+        server.requestHandler(router).listen() {
             if (it.failed()) {
                 log.error("error to start server: ", it.cause())
                 exitProcess(1)
-            }else {
+            } else {
                 log.info("start web server at ${this.config} success")
             }
         }
@@ -51,11 +50,35 @@ class WebVerticle : CoroutineVerticle() {
     }
 
     private fun test(requestHandler: RoutingContext) {
-        launch(requestHandler.vertx().dispatcher()) {
+        val j = launch(requestHandler.vertx().dispatcher(), start = CoroutineStart.LAZY) {
             val res = test2()
             requestHandler.response().end(" $res")
         }
+        j.start()
     }
+
+    private fun testAwait(ctx: RoutingContext) = runBlocking {
+        val res = async (ctx.vertx().dispatcher()) {
+            test2()
+        }
+        val result = res.await()
+        ctx.response().end(result)
+    }
+
+    private fun testBlocking(ctx: RoutingContext) {
+        val res = runBlocking {
+            test2()
+        }
+        ctx.response().end(res)
+    }
+
+    private fun testWith(ctx: RoutingContext) = runBlocking{
+            val res = withContext(ctx.vertx().dispatcher()) {
+                test2()
+            }
+            ctx.response().end(res)
+    }
+
 
 //    /**
 //     * An extension method for simplifying coroutines usage with Vert.x Web routers
