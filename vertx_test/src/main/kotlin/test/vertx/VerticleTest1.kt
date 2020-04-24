@@ -11,7 +11,6 @@ class VerticleTest1 : AbstractVerticle() {
 
     override fun start() {
         super.start()
-        println("in verticle 1")
         log.info("in verticle 1 log")
     }
 

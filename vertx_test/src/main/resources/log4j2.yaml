@@ -1,5 +1,5 @@
 Configuration:
-  status: debug
+  status: INFO
   name: YAMLConfigTest
   properties:
     property:
@@ -34,13 +34,13 @@ Configuration:
         additivity: false
       -
         name: io.netty.handler.codec.http.websocketx
-        level: info
+        level: error
     #      -
     #        name: yg
     #        level: info
     #        AppenderRef:
     #          ref: File
     Root:
-      level: debug
+      level: DEBUG
       AppenderRef:
         ref: STDOUT
