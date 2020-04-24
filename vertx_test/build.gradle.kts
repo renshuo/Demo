@@ -21,6 +21,7 @@ dependencies {
     val vertxV: String = "3.9.0"
     implementation("io.vertx:vertx-core:$vertxV")
     implementation("io.vertx:vertx-lang-kotlin:$vertxV")
+    implementation("io.vertx:vertx-lang-kotlin-coroutines:$vertxV")
     implementation("io.vertx:vertx-web:$vertxV")
     implementation("io.vertx:vertx-lang-kotlin:$vertxV")
     implementation("io.vertx:vertx-config:$vertxV")
