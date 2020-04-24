@@ -1,3 +1,9 @@
+CoroutineVerticleTest:
+  config:
+    cfa: "a"
+  worker: false # default is false
+  multiThreaded: false # default is false
+
 isEnableNanoServer: false
 
 influxdb:

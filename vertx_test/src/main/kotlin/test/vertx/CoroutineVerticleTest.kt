@@ -16,6 +16,7 @@ class CoroutineVerticleTest : CoroutineVerticle() {
 
     override suspend fun start() {
         super.start()
+        log.debug("get config: ${this.config}")
 
         vertx.eventBus().localConsumer<String>("add1").handler {
             log.debug("get requerst: add1: ${it.body()}")
