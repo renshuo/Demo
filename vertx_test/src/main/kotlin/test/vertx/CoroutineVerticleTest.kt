@@ -10,7 +10,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.random.Random
 
-class VerticleTest1 : CoroutineVerticle() {
+class CoroutineVerticleTest : CoroutineVerticle() {
 
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 

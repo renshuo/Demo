@@ -1,6 +1,7 @@
 
 plugins {
     kotlin("jvm") version "1.3.70"
+    id("com.github.johnrengelman.shadow") version("5.2.0")
     application
 }
 
@@ -53,6 +54,6 @@ tasks {
     }
 }
 application {
-    applicationName = "vertx test apx"
+    applicationName = "vertx_test_app"
     mainClassName = "test.vertx.MainKt"
 }

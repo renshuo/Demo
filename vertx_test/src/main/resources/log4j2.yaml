@@ -33,8 +33,8 @@ Configuration:
         level: debug
         additivity: false
       -
-        name: io.netty.handler.codec.http.websocketx
-        level: error
+        name: io.netty
+        level: warn
     #      -
     #        name: yg
     #        level: info
