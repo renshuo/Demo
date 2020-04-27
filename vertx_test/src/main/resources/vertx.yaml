@@ -14,22 +14,14 @@ WebSockJsVerticle:
     heartbeatInterval: 25000 # millisecond
     sessionTimeout: 5 # second
 
-isEnableNanoServer: false
+AuthTest:
+  config:
 
-influxdb:
-  url: http://192.168.31.170:8086
-  username: root
-  password: root
-  database: ppjsdb
+JdbcWorker:
+  workder: true
+  config:
+    driver_class: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    user: root
+    password: "123"
 
-
-server:
-  port: 8082
-
-nanoserver:
-  #  alarmUrl: "ipc:///tmp/lmq.ipc.pub"
-  alarmUrl: "tcp://192.168.31.170:2727"
-
-
-freqData:
-  queryDelay: 2

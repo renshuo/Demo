@@ -2,14 +2,19 @@ package test.vertx
 
 import io.vertx.core.eventbus.Message
 import io.vertx.core.http.HttpServerOptions
+import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.StaticHandler
 import io.vertx.kotlin.core.eventbus.requestAwait
+import io.vertx.kotlin.core.json.json
+import io.vertx.kotlin.core.json.jsonObjectOf
+import io.vertx.kotlin.core.json.obj
 import io.vertx.kotlin.coroutines.CoroutineVerticle
 import io.vertx.kotlin.coroutines.awaitResult
 import io.vertx.kotlin.coroutines.dispatcher
 import kotlinx.coroutines.*
+import java.util.*
 import kotlin.system.exitProcess
 
 class WebVerticle : CoroutineVerticle() {
@@ -29,12 +34,62 @@ class WebVerticle : CoroutineVerticle() {
             log.error("", it.failure())
         }
 
+        router.get("/auth").handler(this::auth).failureHandler {
+            log.error("", it.failure())
+        }
+
+        router.get("/jdbc").handler(this::jdbc).failureHandler {
+            log.error("", it.failure())
+        }
+
         server.requestHandler(router).listen() {
             if (it.failed()) {
                 log.error("error to start server: ", it.cause())
                 exitProcess(1)
             } else {
                 log.info("start web server at ${this.config} success")
+            }
+        }
+    }
+
+    private fun jdbc(ctx: RoutingContext){
+        val paramJson = json {
+            obj(
+                ctx.request().params().map {
+                    "${it.key}"  to "${it.value}"
+                }
+            )
+        }
+        log.debug("get http params: ${ctx.request().params()}")
+        vertx.eventBus().request<JsonObject>("jdbc", paramJson) {
+            if (it.succeeded()) {
+                val res = it.result().body()
+                ctx.response().end(res.toString())
+            }
+        }
+    }
+
+    private fun auth(ctx: RoutingContext) {
+        log.debug("get http header: ${ctx.request().headers()}")
+        log.debug("get http params: ${ctx.request().params()}")
+        log.debug("get http: bodyAsJson: ${ctx.bodyAsJson}")
+        val ba = ctx.request().headers().get("authorization")
+        val up = String(Base64.getDecoder().decode(ba.split(" ")[1]))
+        val (u:String, p: String) = up.split(":")
+        log.debug("get username and password: $u $p")
+        val j = jsonObjectOf(
+            "username" to ctx.request().getParam("username"),
+            "password" to ctx.request().getParam("password")
+
+        )
+        MyAuthProvider().authenticate(j) {
+            val user = it.result()
+            val j = JsonObject.mapFrom(user)
+            user.isAuthorised("login"){authresult ->
+                if (authresult.succeeded()) {
+                    log.debug("get auth user info: $j login result: $authresult")
+                    ctx.response().end("${authresult.result()}")
+                }
             }
         }
     }

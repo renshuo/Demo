@@ -28,6 +28,15 @@ dependencies {
     implementation("io.vertx:vertx-config:$vertxV")
     implementation("io.vertx:vertx-config-yaml:$vertxV")
 
+    implementation("io.vertx:vertx-mongo-client:$vertxV")
+    implementation("io.vertx:vertx-jdbc-client:$vertxV")
+    implementation("org.mariadb.jdbc:mariadb-java-client:1.5.7")
+
+    implementation("io.vertx:vertx-auth-common:$vertxV")
+    implementation("io.vertx:vertx-auth-jdbc:$vertxV")
+
+
+
     val log4jV: String = "2.11.2"
     // val log4jV: String = "2.13.1"
     implementation("org.slf4j:slf4j-api:1.7.28") //slf4j 核心包

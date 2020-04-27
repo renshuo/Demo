@@ -17,6 +17,8 @@ fun main() {
         newVx.deployVerticle(CoroutineVerticleTest(), DeploymentOptions(result.getJsonObject("CoroutineVerticleTest")))
         newVx.deployVerticle(WebVerticle(), DeploymentOptions(result.getJsonObject("WebVerticle")))
         newVx.deployVerticle(WebSockJsVerticle(), DeploymentOptions(result.getJsonObject("WebSockJsVerticle")))
+        newVx.deployVerticle(AuthTest(), DeploymentOptions(result.getJsonObject("AuthTest")))
+        newVx.deployVerticle(JdbcWorker(), DeploymentOptions(result.getJsonObject("JdbcWorker")))
     }
 
 }
