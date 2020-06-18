@@ -1,0 +1,78 @@
+\documentclass[a4paper,12pt]{article} % 使用a4纸，12pt字体
+
+\usepackage{tikz}
+\usepackage{pgf-umlsd} % 画UML图
+\usepgflibrary{arrows} % pgf-umlsd需要
+
+\usepackage{xeCJK}
+\setCJKmainfont{思源宋体 CN}
+
+\begin{document}
+
+\subsection{UML绘图}
+\subsubsection{时序图}
+\begin{figure}
+  \centering
+  \begin{sequencediagram}
+    \newthread{ss}{SimulationServer}
+    \newinst[2]{ctr}{SimControlNode}
+    \newinst[2]{ps}{PhysicsServer}
+    \newinst[2]{sense}{SenseServer}
+
+    \begin{call}{ss}{Initialize()}{sense}{}
+    \end{call}
+    \begin{sdblock}{Run Loop}{in a block}
+      \begin{call}{ss}{StartCycle()}{ctr}{}
+        \begin{call}{ctr}{ActAgent()}{sense}{}
+        \end{call}
+      \end{call}
+      \begin{call}{ss}{Update()}{ps}{}
+        \begin{call}{ps}{PrePhysicsUpdate()}{sense}{state}
+        \end{call}
+        \begin{callself}{ps}{PhysicsUpdate()}{}
+        \end{callself}
+        \begin{call}{ps}{PostPhysicsUpdate()}{sense}{}
+        \end{call}
+      \end{call}
+      \begin{call}{ss}{EndCycle()}{ctr}{}
+        \begin{call}{ctr}{SenseAgent()}{sense}{}
+        \end{call}
+      \end{call}
+    \end{sdblock}
+  \end{sequencediagram}
+  \caption{UML test}
+\end{figure}
+
+\subsubsection{流程图}
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node (start) at (0,0) [draw, terminal] {开始};
+    \node (task) at (0,-1) [draw, predproc] {收到任务请求};
+    \node (listen) at (0,-2) [draw, process] {开启socket};
+    \node (receive) at (0,-3) [draw, predproc] {接收业务数据};
+    \coordinate (pt1) at (3,-5) ;
+    \node (check) at (0,-4) [draw, process] {规范化检验};
+    \node (draw) at (0,-5) [draw, process] {提取业务信息};
+    \node (index) at (0,-6) [draw, process] {生成编目信息};
+    \node (savedb) at (0,-7) [draw, process] {编目信息入库};
+    \node (saveyun) at (0,-8) [draw, process] {数据文件存储归档};
+    \node (finish) at (0,-9) [draw, predproc] {收到任务结束信息};
+    \node (end) at (0,-10) [draw, terminal] {结束};
+    \draw[->] (start) -- (task);
+    \draw[->] (task) -- (listen);
+    \draw[->] (listen) -- (receive);
+    \draw[->] (receive) -- (check);
+    \draw[->] (check) -- (draw);
+    \draw[->] (draw) -- (index);
+    \draw[->] (index) -- (savedb);
+    \draw[->] (savedb) -- (saveyun);
+    \draw[->] (saveyun) -| (pt1) |- (receive);
+    \draw[->] (saveyun) -- (finish);
+    \draw[->] (finish) -- (end);
+    \end{tikzpicture}
+\caption{数据编目软件执行流程图}
+\label{fig:dp_timer}
+\end{figure}
+
+\end{document}
