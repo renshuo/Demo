@@ -9,14 +9,51 @@ version '1'
 sourceCompatibility = 1.11
 
 repositories {
-    mavenCentral()
+    // mavenCentral()
+    maven {
+        url 'https://mirrors.huaweicloud.com/repository/maven/'
+    }
 }
 
 ext {
-    scalaVersion = "2.13.1"
+    scalaVersion = "2.13.3"
+    scalaSV = "2.13"
 }
 
 dependencies {
     implementation "org.scala-lang:scala-library:$scalaVersion"
+    implementation "org.scala-lang.modules:scala-parallel-collections_$scalaSV:0.2.0"
+
+    implementation "org.scalanlp:breeze_$scalaSV:1.0"
+    implementation "org.scalanlp:breeze-viz_$scalaSV:1.0"
+
+
+    def osName = "linux"
+    def osArch = 'x86_64'
+    def classifier = osName + "-" + osArch
+    def jCudaVersion = "10.2.0"
+    compile(group: 'org.jcuda', name: 'jcuda', version: jCudaVersion) {
+        transitive = false
+    }
+    compile(group: 'org.jcuda', name: 'jcufft', version: jCudaVersion) {
+        transitive = false
+    }
+    compile group: 'org.jcuda', name: 'jcuda-natives',
+            classifier: classifier, version: jCudaVersion
+    compile group: 'org.jcuda', name: 'jcublas-natives',
+            classifier: classifier, version: jCudaVersion
+    compile group: 'org.jcuda', name: 'jcufft-natives',
+            classifier: classifier, version: jCudaVersion
+    compile group: 'org.jcuda', name: 'jcusparse-natives',
+            classifier: classifier, version: jCudaVersion
+    compile group: 'org.jcuda', name: 'jcurand-natives',
+            classifier: classifier, version: jCudaVersion
+    compile group: 'org.jcuda', name: 'jcusolver-natives',
+            classifier: classifier, version: jCudaVersion
+    compile group: 'org.jcuda', name: 'jnvgraph-natives',
+            classifier: classifier, version: jCudaVersion
+    compile group: 'org.jcuda', name: 'jcudnn-natives',
+            classifier: classifier, version: jCudaVersion
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

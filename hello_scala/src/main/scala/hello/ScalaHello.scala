@@ -1,5 +1,5 @@
 package hello
 
-object scalaHello extends App {
+object ScalaHello extends App {
   println("hello world")
 }
