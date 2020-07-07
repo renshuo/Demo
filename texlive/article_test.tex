@@ -34,7 +34,7 @@
 % 中文化配置
 \renewcommand{\tablename}{表表}
 \renewcommand{\figurename}{图图}
-\renewcommand{\contentsname}{\centering 目录录} % 将英文的contents改为目录，并居中
+\renewcommand{\contentsname}{\centering 目录} % 将英文的contents改为目录，并居中
 \renewcommand{\listtablename}{\centering 表目录}
 \renewcommand{\listfigurename}{\centering 图目录}
 \renewcommand{\abstractname}{\centering 摘要} 
@@ -73,7 +73,7 @@
 \newsavebox{\headpic}
 \sbox{\headpic}{\includegraphics{headLogo.png}}
 \lhead{}
-\chead{\usebox{\headpic}民用遥感卫星海军应用系统数据存储管理分系统详细设计}
+\chead{\usebox{\headpic}民用遥感卫星应用系统数据存储管理分系统详细设计}
 \rhead{}
 \lfoot{中国航天科技集团公司五院西安分院}
 \cfoot{}
@@ -82,9 +82,8 @@
 \renewcommand{\footrulewidth}{0.4pt}
 %% end
 
-
 %\setcounter{page}{1} 设置这里页码从1重新开始
- 正文开始
+% 正文开始
  \section{概述}
  本文是latex的文档样例文件，大多数常用的latex命令用法\\在这里都应该有。
  如果没有，那就是你不需要的！
@@ -199,131 +198,6 @@
 %% \textcolor[HTML]{00 FF 00}{绿}
 %% \textcolor[rgb]{0 ,0 ,1}{蓝}
 
-\subsection{矢量绘图}
-文档上介绍的几个太复杂了，先用dot吧\\
-\subsection{UML绘图}
-\subsubsection{时序图}
-\begin{figure}
-  \centering
-\begin{sequencediagram}
-  \newthread{ss}{SimulationServer}
-    \newinst[2]{ctr}{SimControlNode}
-    \newinst[2]{ps}{PhysicsServer}
-    \newinst[2]{sense}{SenseServer}
-
-    \begin{call}{ss}{Initialize()}{sense}{}
-    \end{call}
-    \begin{sdblock}{Run Loop}{in a block}
-      \begin{call}{ss}{StartCycle()}{ctr}{}
-        \begin{call}{ctr}{ActAgent()}{sense}{}
-        \end{call}
-      \end{call}
-      \begin{call}{ss}{Update()}{ps}{}
-        \begin{call}{ps}{PrePhysicsUpdate()}{sense}{state}
-        \end{call}
-        \begin{callself}{ps}{PhysicsUpdate()}{}
-        \end{callself}
-        \begin{call}{ps}{PostPhysicsUpdate()}{sense}{}
-        \end{call}
-      \end{call}
-      \begin{call}{ss}{EndCycle()}{ctr}{}
-        \begin{call}{ctr}{SenseAgent()}{sense}{}
-        \end{call}
-      \end{call}
-     \end{sdblock}
-\end{sequencediagram}
-\caption{UML test}
-\end{figure}
-
-\subsubsection{流程图}
-\begin{figure}[H]
-  \centering
-  \begin{tikzpicture}
-    \node (start) at (0,0) [draw, terminal] {开始};
-    \node (task) at (0,-1) [draw, predproc] {收到任务请求};
-    \node (listen) at (0,-2) [draw, process] {开启socket};
-    \node (receive) at (0,-3) [draw, predproc] {接收业务数据};
-    \coordinate (pt1) at (3,-5) ;
-    \node (check) at (0,-4) [draw, process] {规范化检验};
-    \node (draw) at (0,-5) [draw, process] {提取业务信息};
-    \node (index) at (0,-6) [draw, process] {生成编目信息};
-    \node (savedb) at (0,-7) [draw, process] {编目信息入库};
-    \node (saveyun) at (0,-8) [draw, process] {数据文件存储归档};
-    \node (finish) at (0,-9) [draw, predproc] {收到任务结束信息};
-    \node (end) at (0,-10) [draw, terminal] {结束};
-    \draw[->] (start) -- (task);
-    \draw[->] (task) -- (listen);
-    \draw[->] (listen) -- (receive);
-    \draw[->] (receive) -- (check);
-    \draw[->] (check) -- (draw);
-    \draw[->] (draw) -- (index);
-    \draw[->] (index) -- (savedb);
-    \draw[->] (savedb) -- (saveyun);
-    \draw[->] (saveyun) -| (pt1) |- (receive);
-    \draw[->] (saveyun) -- (finish);
-    \draw[->] (finish) -- (end);
-    \end{tikzpicture}
-\caption{数据编目软件执行流程图}
-\label{fig:dp_timer}
-\end{figure}
-
-\section{表格}
-表格前的正文说明
-\begin{table}[!th]
-\begin{tabular}{|l|c|c|c|c|r|}
-
-  \toprule
-1	&存款	&30	&5	&登录，打开存款界面，存入10元，转到我的账户余额，检查余额增加了10元	&需要UML顺序图	\\
-\midrule
-2	&查看自己的交易明细 &10 &5 &登录，点击交易，存钱，返回交易页面，看到新的存款显示。 &使用分页技术避免大规模数据库查询 \\
-\bottomrule
-\end{tabular}
-\caption{表格实例}
-\label{ex:table}
-\end{table}
-表格后的正文说明，引用表格：\ref{ex:table}。
-
-{带有表线，指定宽度的表格}
-\begin{table}[htbp]
-  \centering
-  \begin{tabular}{|p{80pt}|>{\centering}p{80pt}|>{\raggedleft\arraybackslash}p{80pt}|}
-    \toprule
-    x1  & x2  & x3\\
-    \midrule
-    x1  & x2  & x3\\
-    x1  & x2  & x3\\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-
-\section{超链接}
-\url{http://192.169.1.254/bbs}\\
-\href{http://192.169.1.254/bbs}{这是我们的BBS}
-
-
-\section{xeCJK}
-\subsection{汉字基本特效}
-\CJKunderline{下划线}\\
-\CJKunderdblline{双下划线}
-\CJKunderwave{下波浪线}
-\CJKsout{删除线abc}
-\CJKxout{斜删除线abc}
-\CJKunderdot{下点符号}
-\CJKunderanysymbol{0.2em}{\tiny$\triangle$}{将任意符号放在文字下}\\
-
-
-\section{引用编程语言}
-% 引用一段java代码，但是只输出2到5行，左侧显示行号，隔几个号码显示，距离代码框10pt
-\begin{lstlisting}[language=Java,firstline=2,lastline=5,numbers=left,numberstyle=\large,stepnumber=2,numbersep=10pt]
-  import java.util.Map;
-  public class ABC{
-  public static void main(String[] args){
-    System.out.println(``hello world'');
-  }
-  }
-\end{lstlisting}
-  
 \section{bbding，一些有意思的符号}
 \begin{Huge}
 \HandRight \HandLeft \XSolid \Plus \Cross \CrossClowerTips \\
