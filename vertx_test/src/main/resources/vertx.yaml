@@ -1,19 +1,27 @@
-isEnableNanoServer: false
+CoroutineVerticleTest:
+  config:
+    cfa: "a"
+  worker: false # default is false
+  multiThreaded: false # default is false
 
-influxdb:
-  url: http://192.168.31.170:8086
-  username: root
-  password: root
-  database: ppjsdb
+WebVerticle:
+  config:
+    port: 8082
 
+WebSockJsVerticle:
+  config:
+    port: 8083 # for http server use
+    heartbeatInterval: 25000 # millisecond
+    sessionTimeout: 5 # second
 
-server:
-  port: 8082
+AuthTest:
+  config:
 
-nanoserver:
-  #  alarmUrl: "ipc:///tmp/lmq.ipc.pub"
-  alarmUrl: "tcp://192.168.31.170:2727"
+JdbcWorker:
+  workder: true
+  config:
+    driver_class: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test
+    user: root
+    password: "123"
 
-
-freqData:
-  queryDelay: 2
