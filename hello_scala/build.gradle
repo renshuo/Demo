@@ -18,16 +18,43 @@ repositories {
 ext {
     scalaVersion = "2.13.3"
     scalaSV = "2.13"
+
 }
 
 dependencies {
     implementation "org.scala-lang:scala-library:$scalaVersion"
+    // scala parallel connection https://github.com/scala/scala-parallel-collections
     implementation "org.scala-lang.modules:scala-parallel-collections_$scalaSV:0.2.0"
 
+    //breeze https://github.com/scalanlp/breeze
     implementation "org.scalanlp:breeze_$scalaSV:1.0"
     implementation "org.scalanlp:breeze-viz_$scalaSV:1.0"
 
+    //scimage https://github.com/sksamuel/scrimage
+    def scimagev = "4.0.5"
+    implementation "com.sksamuel.scrimage:scrimage-core:$scimagev"
+    implementation "com.sksamuel.scrimage:scrimage-filters:$scimagev"
+    implementation "com.sksamuel.scrimage:scrimage-formats-extra:$scimagev"
+    implementation "com.sksamuel.scrimage:scrimage-scala_$scalaSV:$scimagev"
 
+    //imageIO https://github.com/haraldk/TwelveMonkeys
+    def tmv = "3.6"
+    implementation "com.twelvemonkeys.imageio:imageio-core:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-bmp:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-jpeg:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-tiff:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-pnm:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-psd:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-hdr:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-iff:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-pcx:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-pict:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-sgi:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-tga:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-icns:$tmv"
+    implementation "com.twelvemonkeys.imageio:imageio-thumbsdb:$tmv"
+
+    //jcuda
     def osName = "linux"
     def osArch = 'x86_64'
     def classifier = osName + "-" + osArch
