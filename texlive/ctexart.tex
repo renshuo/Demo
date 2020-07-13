@@ -1,0 +1,74 @@
+\documentclass[UTF8]{ctexart}
+%\usepackage{fullpage} % use 1 inch margins
+%%% fullpage 和 fancyhdr有冲突，会导致第一个有页眉的页面中，正文和页眉重叠
+%%% 另外，fullpage也会使其余页面的页眉离正文过近（几乎要重叠）
+\usepackage{tabularx}
+\usepackage{booktabs} % 提供 \toprule, midrule, bottomrule 用于表格横线
+\usepackage{graphicx} % 插入图片
+\usepackage{xecolor} % 色彩
+\usepackage{hyperref} % 超链接
+\usepackage{xeCJKfntef} % 提供下划线，删除线等特效
+\usepackage{indentfirst} %提供中文首行缩进
+\usepackage{bbding} % 一些有意思的符号
+\usepackage{tikz}
+\usepackage{pgf-umlsd} % 画UML图
+\usepgflibrary{arrows} % pgf-umlsd需要
+\usepackage{listings} % 引用编程语言
+\usepackage{fancyhdr} % 管理页眉页脚
+\usepackage{flowchart} % 绘制流程图
+\usetikzlibrary{arrows} % flowchart需要
+\usepackage{float} % 提供固定位置表格（即非浮动表格/图像功能） 在表格中使用 H 表示强制here
+
+\ctexset{
+  section/format = \Large\bfseries % section 标题不居中
+}
+
+
+
+\renewcommand{\contentsname}{\centering 目录} % 将英文的contents改为目录，并居中
+\renewcommand{\listtablename}{\centering 表目录}
+\renewcommand{\listfigurename}{\centering 图目录}
+\renewcommand{\abstractname}{\centering 摘要} 
+
+
+% 标题首页
+\title{LaTeX样例文档}
+\author{sren}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+\thispagestyle{empty} % 将本页的style设置为空，页码不会出现
+
+\newpage
+% 摘要
+\pagenumbering{Roman}
+摘要部分
+
+
+% 目录
+\newpage
+\tableofcontents                
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+\newpage % 新一页
+\pagenumbering{arabic} %页码改为使用阿拉伯数字
+
+
+\section{字体section}
+当前日期： \today
+\subsection{字号}
+\subsubsection{字号的下级}
+\noindent
+\zihao{4} 4号 \newline
+\zihao{-4} 小4号
+\zihao{0} 0号字号
+
+
+\section{表格}
+
+\end{document}

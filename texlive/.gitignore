@@ -1,4 +1,15 @@
 *.aux
 *.log
 *.pdf
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.out
+*.dvi
+*.pytxcode
+*.latex
+_region_.tex
 **/*.el
