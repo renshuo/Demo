@@ -1,25 +1,35 @@
 plugins {
     id 'scala'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 repositories {
-    jcenter()
+    maven {
+        url 'https://mirrors.huaweicloud.com/repository/maven/'
+    }
 }
 
 dependencies {
-    //zinc 'com.typesafe.zinc:zinc:0.3.9'
-    implementation 'org.scala-lang:scala-library:2.13.1'
-    implementation("org.scalafx:scalafx_2.13:12.0.2-R18")
+    def osName = "linux"
+    def osArch = 'x86_64'
+    def jfxClassifier = osName
+    def jfxVersion = "14.0.1"
 
+    //zinc 'com.typesafe.zinc:zinc:0.3.9'
+    implementation 'org.scala-lang:scala-library:2.13.2'
+
+    // scalaFx
+    implementation("org.scalafx:scalafx_2.13:14-R19")
+    implementation  group: 'org.openjfx', name: "javafx-base",  classifier: jfxClassifier ,version:jfxVersion
+    implementation  group: 'org.openjfx', name: "javafx-controls",  classifier: jfxClassifier ,version:jfxVersion
+    implementation  group: 'org.openjfx', name: "javafx-fxml",  classifier: jfxClassifier ,version:jfxVersion
+    implementation  group: 'org.openjfx', name: "javafx-graphics",  classifier: jfxClassifier ,version:jfxVersion
+    implementation  group: 'org.openjfx', name: "javafx-media",  classifier: jfxClassifier ,version:jfxVersion
+    implementation  group: 'org.openjfx', name: "javafx-swing",  classifier: jfxClassifier ,version:jfxVersion
+    implementation  group: 'org.openjfx', name: "javafx-web",  classifier: jfxClassifier ,version:jfxVersion
 }
 
 application {
     mainClassName = 'scalafx.MyApp'
 }
 
-javafx {
-    version = "13"
-    modules = [ 'javafx.controls', 'javafx.graphics', 'javafx.media' ]
-}
