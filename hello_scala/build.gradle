@@ -82,5 +82,9 @@ dependencies {
     compile group: 'org.jcuda', name: 'jcudnn-natives',
             classifier: classifier, version: jCudaVersion
 
+
+    // AKKA
+    implementation "com.typesafe.akka:akka-actor-typed_$scalaSV:2.6.8"
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
