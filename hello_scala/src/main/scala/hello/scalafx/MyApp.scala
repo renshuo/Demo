@@ -1,4 +1,4 @@
-package scalafx
+package hello.scalafx
 
 import scalafx.Includes._
 import scalafx.application.JFXApp
@@ -18,7 +18,6 @@ object MyApp extends JFXApp {
                 y = 30
                 width = 100
                 height = 100
-
                 fill <== when(hover) choose Green otherwise Red
             }
         }

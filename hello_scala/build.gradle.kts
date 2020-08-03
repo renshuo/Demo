@@ -79,5 +79,21 @@ dependencies {
     // AKKA
     implementation("com.typesafe.akka:akka-actor-typed_$scalaSV:2.6.8")
 
+
+    // scalaFx
+    var jfxClassifier = "linux"
+    val jfxVersion = "14.0.1"
+    implementation("org.scalafx:scalafx_2.13:14-R19")
+    implementation(group= "org.openjfx", name= "javafx-base",  classifier= jfxClassifier ,version=jfxVersion)
+    implementation(group= "org.openjfx", name= "javafx-controls",  classifier= jfxClassifier ,version=jfxVersion)
+    implementation(group= "org.openjfx", name= "javafx-graphics",  classifier= jfxClassifier ,version=jfxVersion)
+    implementation(group= "org.openjfx", name= "javafx-media",  classifier= jfxClassifier ,version=jfxVersion)
+    jfxClassifier = "win"
+    implementation(group= "org.openjfx", name= "javafx-base",  classifier= jfxClassifier ,version=jfxVersion)
+    implementation(group= "org.openjfx", name= "javafx-controls",  classifier= jfxClassifier ,version=jfxVersion)
+    implementation(group= "org.openjfx", name= "javafx-graphics",  classifier= jfxClassifier ,version=jfxVersion)
+    implementation(group= "org.openjfx", name= "javafx-media",  classifier= jfxClassifier ,version=jfxVersion)
+
+
     testImplementation(group= "junit", name= "junit", version= "4.12")
 }
