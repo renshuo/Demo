@@ -9,7 +9,7 @@ group = "scala_hello"
 version = "1"
 
 application {
-    mainClassName = ""
+    mainClassName = "hello.scalafx.ScalaFxFui"
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11
@@ -82,7 +82,7 @@ dependencies {
 
     // scalaFx
     var jfxClassifier = "linux"
-    val jfxVersion = "14.0.1"
+    val jfxVersion = "14.0.2.1"
     implementation("org.scalafx:scalafx_2.13:14-R19")
     implementation(group= "org.openjfx", name= "javafx-base",  classifier= jfxClassifier ,version=jfxVersion)
     implementation(group= "org.openjfx", name= "javafx-controls",  classifier= jfxClassifier ,version=jfxVersion)
