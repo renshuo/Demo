@@ -1,0 +1,90 @@
+\documentclass[UTF8]{ctexbeamer}
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+%% listings config
+\lstset{
+  columns=fixed,
+  language=java,
+  numbers=left,
+  numberstyle=\tiny,
+  basicstyle=\small
+}
+
+\begin{document}
+
+\begin{frame}
+  \title{Actors编程模型} \author{sren} \date{\today}
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  \begin{center}目录\end{center}
+  \normalsize
+  \tableofcontents
+\end{frame}
+
+\section{Actors基本概念}
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+
+\begin{frame}{actor模型}
+  Actor模型是一种并发模型，通过组件方式定义并发编程范式的高级阶段，避免使用者接
+  触多线程并发或线程池等基础概念，简化并发程序的开发难度。\\
+\end{frame}
+
+\begin{frame}{actor模型}
+  \begin{center}
+    \tikzstyle{actor} = [circle, draw, fill=blue!20, text centered]
+    \tikzstyle{msg} = [rectangle, draw, fill=blue!60, text centered]
+    \tikzstyle{line} = [draw, -latex']
+
+    \begin{tikzpicture}[node distance=2cm, auto]
+      \node[msg] (m1) {Mail Box};
+      \node[actor, below of=m1] (A1) {Actor1};
+      \node[msg, right of=m1, node distance=4cm] (m2) {Mail Box};
+      \node[actor, below of=m2] (A2) {Actor2};
+      \node[actor, above of=m1, right=1.25cm] (a3) {Actor3};
+      \node[msg, above of=a3] (m3) {Mail Box};
+
+      \path [line] (m1) -> (A1);
+      \path [line] (A1) -- (-1.5,-2) -- (-1.5, 4) ->  (m3);
+      \path [line] (m2) -> (A2);
+      \path [line] (A2) -> (5.5, -2) -- (5.5, 4) ->  (m3);
+      \path [line] (m3) -> (a3);
+      \path [line] (a3) -> (m1);
+      \path [line] (a3) -> (m2);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}{actor模型}
+  基本概念：
+  \begin{itemize}
+  \item actor:\\
+    actor是一个轻量级的实体，用来接收事件并对事件进行处理。actor可以是有状态或无状态的。
+  \item message:\\
+    message是actor之间传递的信息/命令/事件等，在actor模型中，message是不可变的。
+  \item mailbox:\\
+    mailbox是用来存储消息的队列，actor会从mailbox获取消息并处理。
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{actor模型}
+  基本概念: 
+  \begin{itemize}
+  \item 并行/并发 \\
+    并行是系统同时执行多个任务，并发是系统分时执行多个任务
+  \item 异步/同步 \\
+    同步是调用者需要等待返回，期间不做任何事情。
+    异步是调用者不等待返回，继续做其他事情，当有返回信息时再具体处理。
+  \end{itemize}
+\end{frame}
+
+
+
+\end{document}

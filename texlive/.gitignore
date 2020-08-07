@@ -5,6 +5,8 @@
 *.lof
 *.lot
 *.fls
+*.nav
+*.snm
 *.fdb_latexmk
 *.synctex.gz
 *.out
