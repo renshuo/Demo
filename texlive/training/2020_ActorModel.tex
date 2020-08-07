@@ -6,6 +6,7 @@
 \usepackage{hyperref}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
+\usetikzlibrary{arrows.meta}
 
 %% listings config
 \lstset{
@@ -29,7 +30,7 @@
   \tableofcontents
 \end{frame}
 
-\section{Actors基本概念}
+\section{Actors模型}
 \frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
 
 \begin{frame}{actor模型}
@@ -37,12 +38,12 @@
   触多线程并发或线程池等基础概念，简化并发程序的开发难度。\\
 \end{frame}
 
+\tikzstyle{actor} = [circle, draw, fill=blue!50, text centered]
+\tikzstyle{msg} = [rectangle, draw, fill=blue!80!green!30, text centered]
+\tikzstyle{line} = [draw, -{Latex[length=3mm]}]
+
 \begin{frame}{actor模型}
   \begin{center}
-    \tikzstyle{actor} = [circle, draw, fill=blue!20, text centered]
-    \tikzstyle{msg} = [rectangle, draw, fill=blue!60, text centered]
-    \tikzstyle{line} = [draw, -latex']
-
     \begin{tikzpicture}[node distance=2cm, auto]
       \node[msg] (m1) {Mail Box};
       \node[actor, below of=m1] (A1) {Actor1};
@@ -56,6 +57,7 @@
       \path [line] (m2) -> (A2);
       \path [line] (A2) -> (5.5, -2) -- (5.5, 4) ->  (m3);
       \path [line] (m3) -> (a3);
+      \path [line] (a3) -- (m3);
       \path [line] (a3) -> (m1);
       \path [line] (a3) -> (m2);
     \end{tikzpicture}
@@ -85,6 +87,116 @@
   \end{itemize}
 \end{frame}
 
+\section{多线程模型}
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+\begin{frame} {actor与传统多线程模型的区别}
+  进程，线程，线程池，协程：
+  \begin{itemize}
+  \item 进程： 操作系统管理的并行执行的单元，由操作系统负责调度。
+  \item 线程：同一个软件内的多个并行执行单元，由软件负责调度。
+  \item 线程池：为了避免创建新线程而建立的池，软件调度。
+  \item 协程：用户控制的代码逻辑编排，避免了block等待问题。
+  \end{itemize}
+\end{frame}
 
+\begin{frame} {线程锁}
+  \begin{center}
+    \tikzstyle{os} = [rectangle, draw, fill=green!100!red!10]
+    \tikzstyle{process} = [rectangle, draw, fill=green!50]
+    \tikzstyle{line} = [draw, -{Latex[length=3mm]}]
+
+    \begin{tikzpicture}[node distance=2cm, auto]
+      \node[os, minimum width=10cm,minimum height=6cm] {};
+      \node at (0, 2.5) {APP, 线程调度};
+      \node[process, minimum width=1cm, minimum height=5cm] at (-2.5, -0.3) (t1) {线程1};
+      \node[process, minimum width=1cm, minimum height=5cm] at (2.5, -0.3) (t2) {线程2};
+      \node[draw] at (0, 1) (r1) {资源1};
+      \node[draw] at (0, -1) (r2) {资源2};
+      \path[line]  (t1) -- (r1);
+      \path[line]  (r1) -> (t2);
+      \path[line]  (t2) -> (r2);
+      \path[line]  (r2) -> (t1);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+\section{Actor模型的现实意义}
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+
+\begin{frame}
+  \begin{center}
+  \begin{itemize}
+  \item Actor --> things
+    \item message --> message
+    \end{itemize}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  例子：\\
+  Actor -> 人 \\
+  message -> 电话
+
+  \begin{tikzpicture}[node distance=3cm]
+    \node[actor] (a1) {员工1};
+    \node[actor, right of=a1] (a2) {员工2};
+    \node[actor, right of=a2] (a3) {员工3};
+    \node[actor, above of=a2] (m) {管理员};
+    \path[line] (m) -- (a1);
+    \path[line] (m) -- (a2);
+    \path[line] (m) -- (a3);
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+  例子：\\
+  Actor -> 服务器/设备/软件模块 \\
+  message -> 监控信息
+  \begin{tikzpicture}[node distance=3cm]
+    \node[actor] (a1) {服务器1};
+    \node[actor, right of=a1] (a2) {设备2};
+    \node[actor, right of=a2] (a3) {软件模块3};
+    \node[actor, above of=a2] (m) {监控};
+    \path[line] (m) -- (a1);
+    \path[line] (m) -- (a2);
+    \path[line] (m) -- (a3);
+  \end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}
+  例子：\\
+  Actor -> dispatcher \\
+  message -> worker thread \\
+  
+  \begin{tikzpicture}[node distance=3cm]
+    \node[actor] (a1) {thread 1};
+    \node[actor, right of=a1] (a2) {thread 2};
+    \node[actor, right of=a2] (a3) {thread 3};
+    \node[actor, above of=a2] (m) {dispatcher};
+    \path[line] (m) -- (a1);
+    \path[line] (m) -- (a2);
+    \path[line] (m) -- (a3);
+  \end{tikzpicture}
+\end{frame}
+
+\section {actor模型与物联网}
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+
+\begin{frame}
+  传统互联技术：
+  \begin{itemize}
+    \item 需要server端维护并发的线程或线程池
+  \end{itemize}
+\end{frame}
+
+
+\section {actor模型并发实现}
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+
+\section {actor模型与集群/云计算}
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
 
 \end{document}
