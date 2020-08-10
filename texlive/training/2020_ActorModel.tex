@@ -7,6 +7,8 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
 \usetikzlibrary{arrows.meta}
+\usepackage{colortbl}
+\usepackage{tabu}
 
 %% listings config
 \lstset{
@@ -38,7 +40,7 @@
   触多线程并发或线程池等基础概念，简化并发程序的开发难度。\\
 \end{frame}
 
-\tikzstyle{actor} = [circle, draw, fill=blue!50, text centered]
+\tikzstyle{actor} = [circle, draw, fill=blue!50, text centered, align=center]
 \tikzstyle{msg} = [rectangle, draw, fill=blue!80!green!30, text centered]
 \tikzstyle{line} = [draw, -{Latex[length=3mm]}]
 
@@ -89,7 +91,8 @@
 
 \section{多线程模型}
 \frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
-\begin{frame} {actor与传统多线程模型的区别}
+
+\begin{frame} {传统的线程模型}
   进程，线程，线程池，协程：
   \begin{itemize}
   \item 进程： 操作系统管理的并行执行的单元，由操作系统负责调度。
@@ -99,12 +102,11 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame} {线程锁}
+\begin{frame} {传统的线程模型}
   \begin{center}
     \tikzstyle{os} = [rectangle, draw, fill=green!100!red!10]
     \tikzstyle{process} = [rectangle, draw, fill=green!50]
     \tikzstyle{line} = [draw, -{Latex[length=3mm]}]
-
     \begin{tikzpicture}[node distance=2cm, auto]
       \node[os, minimum width=10cm,minimum height=6cm] {};
       \node at (0, 2.5) {APP, 线程调度};
@@ -116,6 +118,53 @@
       \path[line]  (r1) -> (t2);
       \path[line]  (t2) -> (r2);
       \path[line]  (r2) -> (t1);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame} {actor与传统多线程模型的区别}
+  \begin{center}
+    \begin{tabular}{|c|c|c|} \hline
+      \rowcolor{black!30} & actor模型 & 多线程模型 \\ \hline
+      \cellcolor{green!40} 通信机制 & message+mailbox & 共享内存 \\ \hline
+      \cellcolor{green!40} 执行单元 & actor类 & Runnable接口  \\ \hline
+      \cellcolor{green!40} 调度 & 不需要 & 线程池 \\ \hline
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+
+\section {actor模型并发实现}
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+\begin{frame}
+  \begin{center}
+    \begin{tikzpicture}[node distance=2cm]
+      \node [actor] (ma) {Map\\Actor} ;
+
+      \node [msg, right of=ma, node distance=2.5cm] (m1) {msg...} ;
+      \node [msg, above of=m1] (m2) {msg...} ;
+      \node [msg, below of=m1] (m3) {msg...} ;
+      \node [below of=m1, node distance=1cm] {...};
+
+      \node [actor, right of=m1] (a1) {actor1};
+      \node [actor, right of=m2] (a2) {actor2};
+      \node [actor, right of=m3] (a3) {actor3};
+      \node [below of=a1, node distance=1cm] {...};
+
+      \node [msg, right of=a1] (mn) {msg...};
+      \node [actor, right of=mn] (an) {Reduce\\Actor};
+      
+      \path[line] (ma) -- (m1);
+      \path[line] (ma) -- (m2);
+      \path[line] (ma) -- (m3);
+      \path[line] (m1) -- (a1);
+      \path[line] (m2) -- (a2);
+      \path[line] (m3) -- (a3);
+      \path[line] (a1) -- (mn);
+      \path[line] (a2) -- (mn);
+      \path[line] (a3) -- (mn);
+      \path[line] (mn) -- (an);
+      
     \end{tikzpicture}
   \end{center}
 \end{frame}
@@ -136,16 +185,23 @@
 \begin{frame}
   例子：\\
   Actor -> 人 \\
-  message -> 电话
+  message -> 工作任务
 
-  \begin{tikzpicture}[node distance=3cm]
+  \begin{tikzpicture}[node distance=2.5cm]
     \node[actor] (a1) {员工1};
     \node[actor, right of=a1] (a2) {员工2};
     \node[actor, right of=a2] (a3) {员工3};
-    \node[actor, above of=a2] (m) {管理员};
-    \path[line] (m) -- (a1);
-    \path[line] (m) -- (a2);
-    \path[line] (m) -- (a3);
+    \node[msg, above of=a1, node distance=1.8cm] (m1) {任务列表1};
+    \node[msg, above of=a2, node distance=1.8cm] (m2) {任务列表2};
+    \node[msg, above of=a3, node distance=1.8cm] (m3) {任务列表3};
+
+    \node[actor, above of=m2] (m) {管理员};
+    \path[line] (m) -- (m1);
+    \path[line] (m) -- (m2);
+    \path[line] (m) -- (m3);
+    \path[line] (m1) -- (a1);
+    \path[line] (m2) -- (a2);
+    \path[line] (m3) -- (a3);
   \end{tikzpicture}
 \end{frame}
 
@@ -193,8 +249,6 @@
 \end{frame}
 
 
-\section {actor模型并发实现}
-\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
 
 \section {actor模型与集群/云计算}
 \frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
