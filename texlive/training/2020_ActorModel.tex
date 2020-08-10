@@ -133,10 +133,8 @@
   \end{center}
 \end{frame}
 
-
-\section {actor模型并发实现}
-\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
-\begin{frame}
+\tikzstyle{thread} = [rectangle, draw, fill=green!70!red!20, text centered, align=center]
+\begin{frame}{actor模型并发实现}
   \begin{center}
     \begin{tikzpicture}[node distance=2cm]
       \node [actor] (ma) {Map\\Actor} ;
@@ -153,6 +151,11 @@
 
       \node [msg, right of=a1] (mn) {msg...};
       \node [actor, right of=mn] (an) {Reduce\\Actor};
+
+      \node [below right of=a3] (temp1) {};
+      \node [thread, right of=temp1,minimum width=3cm] (t1) {thread 1};
+      \node [thread, below right of=t1, node distance=1cm, minimum width=3cm] (tn) {thread n};
+      
       
       \path[line] (ma) -- (m1);
       \path[line] (ma) -- (m2);
@@ -164,11 +167,29 @@
       \path[line] (a2) -- (mn);
       \path[line] (a3) -- (mn);
       \path[line] (mn) -- (an);
+
+      \path[line, dashed] (a1) -- (t1);
+      \path[line, dashed] (a2) -- (tn);
+      \path[line, dashed] (a3) -- (tn);
       
     \end{tikzpicture}
   \end{center}
 \end{frame}
 
+\begin{frame}
+
+  \begin{center}
+    消息的 {\LARGE 不可变} 性 \\
+    \vspace{1em}
+    actor发送到mailbox的message是不可变的。\\
+    \vspace{1cm}
+    \begin{tabular}{rl}
+      vertX: & message必须是String类型 \\
+      AKKA in Java: & 使用final关键字\\
+      AKKA in Scala: & 使用case class \\
+    \end{tabular}
+\end{center}
+\end{frame}
 
 \section{Actor模型的现实意义}
 \frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
@@ -213,10 +234,16 @@
     \node[actor] (a1) {服务器1};
     \node[actor, right of=a1] (a2) {设备2};
     \node[actor, right of=a2] (a3) {软件模块3};
-    \node[actor, above of=a2] (m) {监控};
-    \path[line] (m) -- (a1);
-    \path[line] (m) -- (a2);
-    \path[line] (m) -- (a3);
+    \node[msg, above of=a1, node distance=1.8cm] (m1) {redis/mq};
+    \node[msg, above of=a2, node distance=1.8cm] (m2) {redis/mq};
+    \node[msg, above of=a3, node distance=1.8cm] (m3) {redis/mq};
+    \node[actor, above of=m2] (m) {监控};
+    \path[line] (m) -- (m1);
+    \path[line] (m) -- (m2);
+    \path[line] (m) -- (m3);
+    \path[line] (m1) -- (a1);
+    \path[line] (m2) -- (a2);
+    \path[line] (m3) -- (a3);
   \end{tikzpicture}
 
 \end{frame}
@@ -231,26 +258,28 @@
     \node[actor] (a1) {thread 1};
     \node[actor, right of=a1] (a2) {thread 2};
     \node[actor, right of=a2] (a3) {thread 3};
-    \node[actor, above of=a2] (m) {dispatcher};
-    \path[line] (m) -- (a1);
-    \path[line] (m) -- (a2);
-    \path[line] (m) -- (a3);
+    \node[msg, above of=a1, node distance=1.8cm] (m1) {queue};
+    \node[msg, above of=a2, node distance=1.8cm] (m2) {queue};
+    \node[msg, above of=a3, node distance=1.8cm] (m3) {queue};
+    \node[actor, above of=m2] (m) {dispatcher};
+    \path[line] (m) -- (m1);
+    \path[line] (m) -- (m2);
+    \path[line] (m) -- (m3);
+    \path[line] (m1) -- (a1);
+    \path[line] (m2) -- (a2);
+    \path[line] (m3) -- (a3);
   \end{tikzpicture}
 \end{frame}
 
-\section {actor模型与物联网}
-\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+% \section {actor模型与物联网}
+% \frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
 
+\section {actor模型的应用}
 \begin{frame}
-  传统互联技术：
-  \begin{itemize}
-    \item 需要server端维护并发的线程或线程池
-  \end{itemize}
+  网络游戏服务端：actor -> game object
+  物联网： actor -> 设备
+  集群计算： actor -> task/thread/process
 \end{frame}
 
-
-
-\section {actor模型与集群/云计算}
-\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
 
 \end{document}
