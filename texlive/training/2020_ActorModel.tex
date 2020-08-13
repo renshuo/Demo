@@ -275,11 +275,130 @@
 % \frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
 
 \section {actor模型的应用}
-\begin{frame}
-  网络游戏服务端：actor -> game object
-  物联网： actor -> 设备
-  集群计算： actor -> task/thread/process
+\frame{\tableofcontents[currentsection]} % 在每个章节前显示当前章节在目录中的位置
+
+\begin{frame}{actor模型的典型应用}
+  \begin{itemize}
+  \item  网络游戏服务端：actor -> npc, player ...  \\
+  \item  物联网： actor -> 物联网内的各种设备 \\
+  \item  集群计算： actor -> task/thread/process
+  \end{itemize}
 \end{frame}
 
+\tikzstyle{box} = [rectangle, draw, text centered, align=center]
+\tikzstyle{lined} = [draw,  {Latex[length=3mm]}-{Latex[length=3mm]}]
+\begin{frame}{系统监控}
+  actor -> 被监控的设备/模块
+  \begin{center}
+    \begin{tikzpicture}
+      \node[box, fill=green!50, minimum width=6cm, minimum height=4cm] at(0,0) (m) {\ 监控系统 \\\\\\\\\\};
+      \node[box, fill=blue!40] at (-6, 1.5) (d1) {被监控模块1};
+      \node[box, fill=blue!40] at (-6, 0) (d2) {被监控模块2};
+      \node[box, fill=blue!40] at (-6, -1.5) (d3) {被监控模块3};
+      
+      \node[box, fill=blue!25] at (-2, 0.5) (a1) {actor1};
+      \node[box, fill=blue!25] at (-2, -0.5) (a2) {actor2};
+      \node[box, fill=blue!25] at (-2, -1.5) (a3) {actor3};
+      \path[lined] (d1) -- (a1);
+      \path[lined] (d2) -- (a2);
+      \path[lined] (d3) -- (a3);
+      
+      \node[box, fill=green!60!blue!80] at (3,-0.5) (ui) {监\\控\\界\\面};
+      \node[box, fill=blue!25] at (1.5, 0.5) (a4) {actor4};
+      \node[box, fill=blue!25] at (1.5, -0.5) (a5) {actor5};
+      \node[box, fill=blue!25] at (1.5, -1.5) (a6) {actor6};
+      
+      \path[lined] (a1) -> (a4);
+      \path[lined] (a2) -- (a5);
+      \path[lined] (a3) -- (a6);
+      
+      \path[lined] (a4) -- (ui);
+      \path[lined] (a5) -- (ui);
+      \path[lined] (a6) -- (ui);
+    \end{tikzpicture}
+  \end{center}
+  {\small actor1,actor2,actor3负责接收和发送3个被监控模块的监视信息和控制命令。} \\
+  {\small actor4,actor5,actor6 负责管理被监控模块的界面元素状态信息，以及控制信息。} \\
+  {\Large  每个actor只专注于自己对应的设备或者界面模块}
+\end{frame}
+
+\begin{frame} {调度系统}
+  actor -> 被调度的软件/硬件/模块
+  \begin{center}
+    \begin{tikzpicture}
+      % \draw[help lines, color=blue] (-8,-5) grid (0,0);
+      % \draw[help lines] (0,0) grid (4,4);
+      \node[box, fill=green!50, minimum width=6cm, minimum height=4cm] at(0,0) (m) {\ 调度系统 \\\\\\\\\\\\};
+      \node[box, fill=blue!40] at (-3, -3) (d1) {被调度软件1};
+      \node[box, fill=blue!40] at ( 0, -3) (d2) {被调度硬件2};
+      \node[box, fill=blue!40] at ( 3, -3) (d3) {被调度模块3};
+      
+      \node[box, fill=blue!25] at (-1.7, -1.3) (a1) {actor1};
+      \node[box, fill=blue!25] at (   0, -1.3) (a2) {actor2};
+      \node[box, fill=blue!25] at ( 1.7, -1.3) (a3) {actor3};
+      \path[lined] (d1) -- (a1);
+      \path[lined] (d2) -- (a2);
+      \path[lined] (d3) -- (a3);
+
+      \node[box, fill=red!40, minimum width=4.5cm] at (0,0) (p) {调度流程};
+
+      \path[line] (p) -- (a1);
+      \path[line] (p) -- (a2);
+      \path[line] (p) -- (a3);
+      
+    \end{tikzpicture}
+  \end{center}
+  
+\end{frame}
+
+\begin{frame} {并行计算}
+  actor -> 算法子模块
+  \begin{center}
+    \begin{tikzpicture}
+      % \draw[help lines, color=blue] (-8,-5) grid (0,0);
+      % \draw[help lines] (0,0) grid (4,4);
+      \node[box, fill=green!50, minimum width=7cm, minimum height=1.5cm] at(2,3) (ms) {\ map system \\\\};
+      \node[box, fill=blue!25, minimum width=6cm] at (2,3) (p) {map};
+
+      \node[box, fill=green!50, minimum width=3cm, minimum height=4cm] at(0,0) (m) {\ sytem1 \\\\\\\\\\\\\\};
+      \node[box, fill=blue!25] at (0,  0.5) (a1) {actor1};
+      \node[box, fill=blue!25] at (0, -0.5) (a2) {actor2};
+      \node[box, fill=blue!25] at (0, -1.5) (a3) {actor3};
+      \path[line] (p) -- (a1);
+      \path[line] (p) -- (a2);
+      \path[line] (p) -- (a3);
+      
+      \node[box, fill=green!50, minimum width=3cm, minimum height=4cm] at(4,0) (m) {\ sytem2 \\\\\\\\\\\\\\};
+      \node[box, fill=blue!25] at (4,  0.5) (b1) {actor1};
+      \node[box, fill=blue!25] at (4, -0.5) (b2) {actor2};
+      \node[box, fill=blue!25] at (4, -1.5) (b3) {actor3};
+      \path[line] (p) -- (b1);
+      \path[line] (p) -- (b2);
+      \path[line] (p) -- (b3);
+
+      \node[box, fill=green!50, minimum width=7cm, minimum height=1.5cm] at(2,-3) (ms) {\\\\\\ reduce sytem};
+      \node[box, fill=blue!25, minimum width=6cm] at (2,-3) (p) {recude};
+      \path[line] (a1) -- (p);
+      \path[line] (a2) -- (p);
+      \path[line] (a3) -- (p);
+      
+      \path[line] (b1) -- (p);
+      \path[line] (b2) -- (p);
+      \path[line] (b3) -- (p);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\section{actor模型在Jvm系语言中的实现}
+
+\begin{frame} {具体实现}
+  \begin{itemize}
+  \item AKKA:  \href{https://akka.io/}{https://akka.io/} \\
+    AKKA支持java和scala语言。
+  \item Vert.X: \href{https://vertx.io/}{https://vertx.io/} \\
+    vertx支持java,kotlin, scala 等多个语言。
+  \end{itemize}
+
+\end{frame}
 
 \end{document}
