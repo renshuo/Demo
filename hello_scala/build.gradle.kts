@@ -58,7 +58,7 @@ dependencies {
 
     //jcuda
     //jcuda
-    val classifier = "linux-x86_64"
+    var classifier = "linux-x86_64"
     val jCudaVersion = "10.2.0"
     implementation("org.jcuda:jcuda:$jCudaVersion") {
         isTransitive = false
@@ -74,7 +74,15 @@ dependencies {
     implementation("org.jcuda", "jcusolver-natives", classifier = classifier, version = jCudaVersion     )
     implementation("org.jcuda", "jnvgraph-natives",  classifier = classifier, version = jCudaVersion      )
     implementation("org.jcuda", "jcudnn-natives",    classifier = classifier, version = jCudaVersion        )
-
+    classifier = "windows-x86_64"
+    implementation("org.jcuda", "jcuda-natives",     classifier = classifier, version = jCudaVersion         )
+    implementation("org.jcuda", "jcublas-natives",   classifier = classifier, version = jCudaVersion       )
+    implementation("org.jcuda", "jcufft-natives",    classifier = classifier, version = jCudaVersion        )
+    implementation("org.jcuda", "jcusparse-natives", classifier = classifier, version = jCudaVersion     )
+    implementation("org.jcuda", "jcurand-natives",   classifier = classifier, version = jCudaVersion       )
+    implementation("org.jcuda", "jcusolver-natives", classifier = classifier, version = jCudaVersion     )
+    implementation("org.jcuda", "jnvgraph-natives",  classifier = classifier, version = jCudaVersion      )
+    implementation("org.jcuda", "jcudnn-natives",    classifier = classifier, version = jCudaVersion        )
 
     // AKKA
     implementation("com.typesafe.akka:akka-actor-typed_$scalaSV:2.6.8")
