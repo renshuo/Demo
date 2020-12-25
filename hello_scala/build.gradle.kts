@@ -75,7 +75,6 @@ dependencies {
     //implementation("org.jcuda", "jnvgraph-natives",  classifier = classifier, version = jCudaVersion      )
     //implementation("org.jcuda", "jcudnn-natives",    classifier = classifier, version = jCudaVersion        )
 
-
     // AKKA
     implementation("com.typesafe.akka:akka-actor-typed_$scalaSV:2.6.8")
 
