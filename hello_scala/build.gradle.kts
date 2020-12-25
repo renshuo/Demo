@@ -59,7 +59,7 @@ dependencies {
     //jcuda
     //jcuda
     val classifier = "linux-x86_64"
-    val jCudaVersion = "10.2.0"
+    val jCudaVersion = "11.0.0"
     implementation("org.jcuda:jcuda:$jCudaVersion") {
         isTransitive = false
     }
@@ -72,8 +72,8 @@ dependencies {
     implementation("org.jcuda", "jcusparse-natives", classifier = classifier, version = jCudaVersion     )
     implementation("org.jcuda", "jcurand-natives",   classifier = classifier, version = jCudaVersion       )
     implementation("org.jcuda", "jcusolver-natives", classifier = classifier, version = jCudaVersion     )
-    implementation("org.jcuda", "jnvgraph-natives",  classifier = classifier, version = jCudaVersion      )
-    implementation("org.jcuda", "jcudnn-natives",    classifier = classifier, version = jCudaVersion        )
+    //implementation("org.jcuda", "jnvgraph-natives",  classifier = classifier, version = jCudaVersion      )
+    //implementation("org.jcuda", "jcudnn-natives",    classifier = classifier, version = jCudaVersion        )
 
 
     // AKKA
@@ -82,8 +82,8 @@ dependencies {
 
     // scalaFx
     var jfxClassifier = "linux"
-    val jfxVersion = "14.0.2.1"
-    implementation("org.scalafx:scalafx_2.13:14-R19")
+    val jfxVersion = "15.0.1"
+    implementation(group ="org.scalafx", name="scalafx_2.13", version="14-R19")
     implementation(group= "org.openjfx", name= "javafx-base",  classifier= jfxClassifier ,version=jfxVersion)
     implementation(group= "org.openjfx", name= "javafx-controls",  classifier= jfxClassifier ,version=jfxVersion)
     implementation(group= "org.openjfx", name= "javafx-graphics",  classifier= jfxClassifier ,version=jfxVersion)
@@ -94,6 +94,27 @@ dependencies {
     implementation(group= "org.openjfx", name= "javafx-graphics",  classifier= jfxClassifier ,version=jfxVersion)
     implementation(group= "org.openjfx", name= "javafx-media",  classifier= jfxClassifier ,version=jfxVersion)
 
+
+    //slf4j
+    val slf4jversion = "1.7.30"
+    val log4jversion = "2.13.3"
+    val jacksonversion = "2.11.0"
+    implementation("org.slf4j:slf4j-api:$slf4jversion") //slf4j 核心包
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:$log4jversion") // slf4j log4j2 桥接包
+    implementation(group= "org.apache.logging.log4j", name= "log4j-api", version = log4jversion) // Log4j2核心包
+    implementation(group= "org.apache.logging.log4j", name= "log4j-core", version= log4jversion) // Log4j2核心包
+    // add jackson dep for identify log4j2.yaml type config
+    implementation(group="com.fasterxml.jackson.core", name="jackson-annotations", version=jacksonversion)
+    implementation(group="com.fasterxml.jackson.core", name="jackson-core", version=jacksonversion)
+    implementation(group="com.fasterxml.jackson.dataformat", name="jackson-dataformat-yaml", version=jacksonversion)
+
+    // vert.x
+//    val vertxVersion="3.9.2"
+//    implementation("io.vertx:vertx-lang-scala_$scalaSV:$vertxVersion")
+//    implementation("io.vertx:vertx-core:$vertxVersion")
+//    implementation("io.vertx:vertx-web:$vertxVersion")
+//    implementation("io.vertx:vertx-config:$vertxVersion")
+//    implementation("io.vertx:vertx-config-yaml:$vertxVersion")
 
     testImplementation(group= "junit", name= "junit", version= "4.12")
 }
