@@ -1,0 +1,50 @@
+plugins {
+    id 'application'
+    id 'java'
+    id 'scala'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+group 'flinkTest'
+version '0.1'
+
+sourceCompatibility = 1.8
+
+ext {
+    scalaVersion = "2.12.8"
+    flinkVersion = "1.9.1"
+}
+
+repositories {
+    maven { url 'https://maven.aliyun.com/repository/public/' }
+    mavenCentral()
+}
+
+configurations {
+    flinkShadowJar // dependencies which go into the shadowJar
+
+    // 总是排除这些依赖（也来自传递依赖），因为 Flink 会提供这些依赖。
+    flinkShadowJar.exclude group: 'org.apache.flink', module: 'force-shading'
+    flinkShadowJar.exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    flinkShadowJar.exclude group: 'org.slf4j'
+    flinkShadowJar.exclude group: 'log4j'
+}
+
+dependencies {
+    implementation "org.scala-lang:scala-library:${scalaVersion}"
+    implementation "org.scala-lang:scala-compiler:${scalaVersion}"
+    implementation "org.scala-lang:scala-reflect:${scalaVersion}"
+
+    compile "org.apache.flink:flink-scala_2.12:${flinkVersion}"
+    compile "org.apache.flink:flink-streaming-scala_2.12:${flinkVersion}"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+application {
+    mainClassName('test.WordCountTest')
+}
+
+shadowJar {
+    configurations = [project.configurations.flinkShadowJar]
+}
