@@ -20,6 +20,10 @@ libraryDependencies ++= {
     .map(m => "org.openjfx" % s"javafx-$m" % "16" classifier osName)
 }
 
+/* scalaTest */
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.8"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.8" % "test"
+
 // Fork a new JVM for 'run' and 'test:run', to avoid JavaFX double initialization problems
 fork := true
 
