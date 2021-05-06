@@ -27,3 +27,7 @@ build/
 /**/gradlew*
 /**/gradle*
 /**/.gradle
+/scala3/project/project/
+/scala3/project/target/
+/scala3/target
+/scala3/.bsp/
