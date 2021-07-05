@@ -8,7 +8,7 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-featu
 libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % Test
 
 /* add scalafx dep */
-libraryDependencies += "org.scalafx" % "scalafx_3" % "16.0.0-R23"
+libraryDependencies += "org.scalafx" % "scalafx_3" % "16.0.0-R24"
 libraryDependencies ++= {
   lazy val osName = System.getProperty("os.name") match {
     case n if n.startsWith("Linux") => "linux"

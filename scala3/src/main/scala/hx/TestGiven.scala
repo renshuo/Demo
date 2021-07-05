@@ -3,7 +3,6 @@ package hx
 import java.util
 import java.util.concurrent.ForkJoinPool
 import scala.concurrent.ExecutionContext
-import scala.reflect.api.Universe
 
 
 trait Ord[T] {
