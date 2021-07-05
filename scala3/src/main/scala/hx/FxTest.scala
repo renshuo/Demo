@@ -12,6 +12,14 @@ import scalafx.scene.paint.Color._
 import scalafx.scene.paint._
 import scalafx.scene.text.Text
 import javafx.scene.input.{KeyCode, KeyEvent}
+
+
+extension [T](s: Seq[T]){
+  def allDo(f: T => Unit ): Seq[T] = {
+    s.map(f)
+    s
+  }
+}
 /**
  *
  */
@@ -21,25 +29,23 @@ object FxTest extends JFXApp3 {
 
     val menu = new MenuBar {
       useSystemMenuBar = true
-      menus = List(
+      menus = Seq(
         new Menu("File") {
-          items = List(
+          items = Seq(
             new MenuItem("Open") {},
             new SeparatorMenuItem(),
             new MenuItem("exit") {
               onAction = e => System.exit(0)
               // click =  e:Event => exit(0)
             }
-          )
+          }
         },
         new Menu("编辑") {
           items = List(
             new MenuItem("copy") {},
             new MenuItem("paste"),
             new MenuItem("cut") {},
-            new MenuItem("delete") {
-              //color = Color.RED
-            }
+            new MenuItem("delete") {}
           )
         }
       )
@@ -60,10 +66,9 @@ object FxTest extends JFXApp3 {
       new Button("abc") {
          style = "-fx-base: green"
       },
-      ).map { b =>
+      ).allDo { b =>
         b.maxWidth=300 //; btn.minWidth = 120; btn.maxHeight = 30
         b.minWidth=120
-        b
       }
     }
 

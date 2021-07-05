@@ -1,6 +1,16 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <a-button type="primary">Primary</a-button>
+  <br/>
+  <a-row>
+    <a-col span="16">
+      <a-button type="primary">Primary1</a-button>
+    </a-col>
+    <a-col span="8">
+      <a-input width="300" type="number"></a-input>
+    </a-col>
+  </a-row>
+  <a-button type="primary">Primary2</a-button>
+  <a-button type="primary">Primary3</a-button>
   <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
