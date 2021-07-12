@@ -12,17 +12,12 @@ import akka.actor.typed.scaladsl.Behaviors
 
 object MonitorActor {
   def apply(): Behavior[String] = {
+    println("in monitor apploy")
     Behaviors.setup[String](context => new MonitorActor(context))
   }
 }
 
 class MonitorActor(context: ActorContext[String]) extends AbstractBehavior[String](context) {
-
-  def apply(): Behavior[String] = {
-    println("in monitor apploy")
-    Behaviors.setup[String](context => new MonitorActor(context))
-
-  }
 
   val name = "monitor actor"
   context.log.info("IoT Application started")
@@ -34,6 +29,7 @@ class MonitorActor(context: ActorContext[String]) extends AbstractBehavior[Strin
     dev1 ! DeviceCommand("test", context.self)
     Behaviors.unhandled[String]
   end onMessage
+
 }
 
 case class DeviceCommand(name: String, father: ActorRef[String])
@@ -52,11 +48,3 @@ class Device(context: ActorContext[DeviceCommand]) {
     }
 
 }
-//class Device(context: ActorContext[DeviceCommand]) extends AbstractBehavior[DeviceCommand](context) {
-//  override def onMessage(msg: DeviceCommand): Behavior[DeviceCommand] = {
-//    println(s"dev msg: $msg")
-//    msg.father ! "asdf"
-//    Behaviors.unhandled[DeviceCommand]
-//  }
-//}
-
