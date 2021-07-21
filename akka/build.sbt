@@ -13,6 +13,8 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9" % "test"
 //com.typesafe.akka::akka-actor-typed:2.6.15
 libraryDependencies += "com.typesafe.akka" % "akka-actor-typed_2.13" % "2.6.15"
 
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
+
 mainClass := Some("hx.FxTest")
 
 assembly / assemblyMergeStrategy  := {
