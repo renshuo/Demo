@@ -31,3 +31,7 @@ build/
 /scala3/project/target/
 /scala3/target
 /scala3/.bsp/
+/scala-js/target/
+/scala-js/.bsp/
+/scala-js/project/project/
+/scala-js/project/target/
