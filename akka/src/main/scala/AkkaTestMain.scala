@@ -27,7 +27,7 @@ class MonitorActor(context: ActorContext[String]) extends AbstractBehavior[Strin
 
 case class DeviceCommand(name: String, father: ActorRef[String])
 
-class Device() {
+class Device {
 
   def counter(): Behavior[DeviceCommand] =
     Behaviors.receive { (ctx, msg) =>
