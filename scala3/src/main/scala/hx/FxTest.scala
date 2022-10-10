@@ -14,12 +14,13 @@ import scalafx.scene.text.Text
 import javafx.scene.input.{KeyCode, KeyEvent}
 
 
-extension [T](s: Seq[T]){
-  def allDo(f: T => Unit ): Seq[T] = {
+extension[T] (s: Seq[T]) {
+  def allDo(f: T => Unit): Seq[T] = {
     s.map(f)
     s
   }
 }
+
 /**
  *
  */
@@ -35,10 +36,9 @@ object FxTest extends JFXApp3 {
             new MenuItem("Open") {},
             new SeparatorMenuItem(),
             new MenuItem("exit") {
-              onAction = e => System.exit(0)
+              onAction = { e => System.exit(0) }
               // click =  e:Event => exit(0)
-            }
-          }
+            })
         },
         new Menu("编辑") {
           items = List(
@@ -53,8 +53,8 @@ object FxTest extends JFXApp3 {
 
     val toolbar = new ToolBar() {
       items = Seq(
-        new Button("tool1"){},
-        new Button("tool2"){},
+        new Button("tool1") {},
+        new Button("tool2") {},
       )
     }
 
@@ -63,12 +63,12 @@ object FxTest extends JFXApp3 {
         new Button("abc") {
           style = "-fx-base: red"
         },
-      new Button("abc") {
-         style = "-fx-base: green"
-      },
+        new Button("abc") {
+          style = "-fx-base: green"
+        },
       ).allDo { b =>
-        b.maxWidth=300 //; btn.minWidth = 120; btn.maxHeight = 30
-        b.minWidth=120
+        b.maxWidth = 300 //; btn.minWidth = 120; btn.maxHeight = 30
+        b.minWidth = 120
       }
     }
 
@@ -76,22 +76,27 @@ object FxTest extends JFXApp3 {
     val b1 = new BorderPane {
       minWidth = 800
       minHeight = 600
-      top = new VBox{
+      top = new VBox {
         children = Seq(menu, toolbar)
       }
       left = leftNav
       style = "-fx-font: normal bold 10pt 'Source Han Sans CN'"
       onKeyPressed = { e =>
-        if e.getCode==KeyCode.ESCAPE then System.exit(0)
+        println(s"get key: ${e}")
+        if e.getCode == KeyCode.ESCAPE then System.exit(0)
       }
       right = new HBox {
         children = Seq(
-          new Text { text = "abc"}
+          new Text {
+            text = "abc"
+          }
         )
       }
       bottom = new HBox {
         children = Seq(
-          new Label { text = "abc"}
+          new Label {
+            text = "abc"
+          }
         )
       }
     }
